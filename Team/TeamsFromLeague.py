@@ -1,6 +1,6 @@
 import requests 
 from bs4 import BeautifulSoup
-
+from PlayersFromTeam import findPlayersFromTeam
 import pandas as pd
 
 #For pretending being a browser
@@ -30,9 +30,7 @@ for teamTag in teamTags:
     teamNames.append(teamTag.text)
     teamHyperlinks.append("https://www.transfermarkt.com" + teamTag['href'])
 
-for teamName in teamNames:
-    print(teamName)
+players = findPlayersFromTeam(teamHyperlinks[0])
 
-for teamHyperlink in teamHyperlinks:
-    print(teamHyperlink)
+print (players[2])
     
