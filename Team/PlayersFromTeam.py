@@ -34,4 +34,4 @@ def findPlayersFromTeam(teamHyperlink):
         playerNames.append(playerTag.text)
         playerHyperlinks.append("https://www.transfermarkt.com" + playerTag['href'])
 
-    return playerIds
+    return playerIds, playerNames, playerHyperlinks

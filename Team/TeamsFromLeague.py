@@ -1,36 +1,37 @@
 import requests 
 from bs4 import BeautifulSoup
-from PlayersFromTeam import findPlayersFromTeam
+from Team.PlayersFromTeam import findPlayersFromTeam
 import pandas as pd
 
-#For pretending being a browser
-headers = {'User-Agent': 
-           'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
 
-#verein/teamid/season_id/year
-page = "https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL2L"
+def findTeamsFromLeague(hyperlink):
+	#For pretending being a browser
+	headers = {'User-Agent': 
+			   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
 
-#Getting full page
-pageTree = requests.get(page, headers=headers)
-pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
+	#verein/teamid/season_id/year
+	page = hyperlink;
 
-table = pageSoup.find("div", {"id":"yw1"})
+	#Getting full page
+	pageTree = requests.get(page, headers=headers)
+	pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
 
-fullTeamTags = table.find_all("td", {"class" : "hide-for-small"})
+	table = pageSoup.find("div", {"id":"yw1"})
 
-teamTags = []
+	fullTeamTags = table.find_all("td", {"class" : "hide-for-small"})
 
-for fullTeamTag in fullTeamTags:
-    teamTags.extend(fullTeamTag.find_all("a", {"class":"vereinprofil_tooltip"}))
+	teamTags = []
 
-teamNames = []
-teamHyperlinks = []
+	for fullTeamTag in fullTeamTags:
+		teamTags.extend(fullTeamTag.find_all("a", {"class":"vereinprofil_tooltip"}))
 
-for teamTag in teamTags:
-    teamNames.append(teamTag.text)
-    teamHyperlinks.append("https://www.transfermarkt.com" + teamTag['href'])
+	teamIds = []
+	teamNames = []
+	teamHyperlinks = []
 
-players = findPlayersFromTeam(teamHyperlinks[0])
-
-print (players[2])
-    
+	for teamTag in teamTags:
+		teamIds.append((teamTag['href'].split('/'))[-3])
+		teamNames.append(teamTag.text)
+		teamHyperlinks.append("https://www.transfermarkt.com" + teamTag['href'])
+		
+	return teamIds, teamNames, teamHyperlinks
