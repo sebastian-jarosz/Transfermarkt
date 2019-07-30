@@ -24,6 +24,7 @@ playerDatesOfBirth = []
 for i in range(0,len(teamHyperlinks)):
 	tempIds, tempNames, tempHyperlinks = findPlayersFromTeam(teamHyperlinks[i])
 	tempTeamName = teamNames[i]
+	print("Staring of import for " + teamNames[i])
 	for j in range(0, (len(tempIds))):
 		playerTeams.append(tempTeamName)
 		time.sleep(1)
@@ -31,13 +32,12 @@ for i in range(0,len(teamHyperlinks)):
 		playerDatesOfBirth.append(tempDateOfBirth)
 		playerPositions.append(tempPosition)
 		playerAgents.append(tempAgent)
-		print(tempNames[j] + " imported!")
+	print("End of import for " + teamNames[i])
 	playerIds.extend(tempIds)
 	playerNames.extend(tempNames)
 	playerHyperlinks.extend(tempHyperlinks)
 	
 
-# df = pd.DataFrame({"ID":playerIds,"NAME":playerNames, "TEAM":playerTeams,"HYPERLINK":playerHyperlinks})
-# df.to_excel("test.xlsx")
+df = pd.DataFrame({"ID":playerIds,"NAME":playerNames, "TEAM":playerTeams,"HYPERLINK":playerHyperlinks, "DATE OF BIRTH":playerDatesOfBirth, "POSITION":playerPositions, "AGENT":playerAgents})
+df.to_excel("test.xlsx")
 
-print(playerPositions)
