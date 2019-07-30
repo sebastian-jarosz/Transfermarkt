@@ -1,6 +1,6 @@
 import requests 
 from bs4 import BeautifulSoup
-from Team.PlayersFromTeam import findPlayersFromTeam
+from Scripts.Team.PlayersFromTeam import findPlayersFromTeam
 import pandas as pd
 
 
