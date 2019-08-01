@@ -1,8 +1,9 @@
 from Scripts.League.PlayersFromLeague import generateListOfPlayersFromLeague
 from Scripts.League.CreateLeagueSaisonHyperlink import *
+import os
 
-ekstraklasa = "https://www.transfermarkt.com/pko-ekstraklasa/startseite/wettbewerb/PL1"
-# generateListOfPlayersFromLeague(ekstraklasa)
+directory = os.environ['HOME'] + "/Desktop/Transfermark Export/"
 
-print(generateLeagueSaisonHyperlink(ekstraklasa, 2017))
-print(generateLeagueSaisonQueueHyperlink(ekstraklasa, 2016, 30))
+if not os.path.exists(directory):
+    os.makedirs(directory)
+

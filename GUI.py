@@ -1,15 +1,11 @@
 import PySimpleGUI as sg
 import datetime
 from Scripts.League.PlayersFromLeague import generateListOfPlayersFromLeague
-
+import os
 
 #GUI VARIABLES
-#Get 10 years from this year
-YEARS = []
-year = datetime.datetime.today().year
-for i in range(0, 10):
-    YEARS.append(year-i)
 
+#Leagues
 LEAGUENAMES = ['Ekstraklasa', 'I liga', 'II liga', 'III liga - I Grupa', 'III liga - II Grupa', 'III liga - III Grupa', 'III liga - IV Grupa']
 
 LEAGUEMAP = {'Ekstraklasa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL1',
@@ -20,21 +16,42 @@ LEAGUEMAP = {'Ekstraklasa' : 'https://www.transfermarkt.com/jumplist/startseite/
              'III liga - III Grupa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL33',
              'III liga - IV Grupa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL34'}
 
+#Get 10 years from this year
+SEASONS = []
+year = datetime.datetime.today().year
+for i in range(0, 10):
+    tempSeason = str(year - i) + '/' + str(year - i +1)
+    SEASONS.append(tempSeason)
 
-tab1_layout =  [[sg.Combo(LEAGUENAMES, size=(100,100), readonly="True")],
-                 [sg.Combo(YEARS, size=(100,100), readonly="True")]]
+#Queues    
+QUEUES = []
+for i in range(1, 37):
+    QUEUES.append(i)
 
-tab2_layout = [[sg.Text('This is inside tab 2')]]
+tab1_layout =  [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonly="True")],
+                [sg.Text("Season"), sg.Combo(SEASONS, size=(100,100), readonly="True")],
+                [sg.ReadButton('Export players')]]
 
-layout = [[sg.TabGroup([[sg.Tab('Players from league', tab1_layout),
-                         sg.Tab('Matches from queue', tab2_layout)]])],
-          [sg.ReadButton('Read'), sg.Exit()]]
+tab2_layout = [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonly="True")],
+               [sg.Text("Season"), sg.Combo(SEASONS, size=(100,100), readonly="True")],
+               [sg.Text("Queue"), sg.Combo(QUEUES, size=(100,100), readonly="True")],
+               [sg.ReadButton('Export matches')]]
 
-window = sg.Window('S4S Transfermarkt Data Manager', size=(1000, 500)).Layout(layout)
+layout = [[sg.Image(os.environ['HOME'] + "/Desktop/GitLab/Transfermarkt/Transfermarkt/GUI/Logo.png", 
+           pad=(100, 0))],
+          [sg.TabGroup([[sg.Tab('Players from league', tab1_layout),
+                         sg.Tab('Matches from queue', tab2_layout)]], pad=((100, 100), (100,100)))],
+          [sg.Exit()]]
+
+window = sg.Window('S4S Transfermarkt Data Manager').Layout(layout)
 
 while True:
     event, values = window.Read()
     if event is None or event == 'Exit':
         break
-    elif event == 'Read':
-        print(LEAGUEMAP[values[0]])
+    elif event == 'Export players':
+        generateListOfPlayersFromLeague(values[1], values[2].replace('/', '_'), LEAGUEMAP[values[1]])
+    elif event == 'Export matches':
+        print(LEAGUEMAP[values[3]])
+        print(values[4].split('/')[0])
+        print(values[5])

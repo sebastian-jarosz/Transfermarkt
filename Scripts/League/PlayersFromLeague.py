@@ -1,5 +1,6 @@
 import requests
 
+import PySimpleGUI as sg
 from bs4 import BeautifulSoup
 from Scripts.Team.PlayersFromTeam import findPlayersFromTeam
 from Scripts.Team.TeamsFromLeague import findTeamsFromLeague
@@ -8,8 +9,9 @@ import time
 import pandas as pd
 from pathlib import Path
 import os
+import caffeine
 
-def generateListOfPlayersFromLeague(LeagueHyperlink):
+def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 	teamIds, teamNames, teamHyperlinks = findTeamsFromLeague(LeagueHyperlink)
 
 	playerIds = []
@@ -20,10 +22,15 @@ def generateListOfPlayersFromLeague(LeagueHyperlink):
 	playerAgents = []
 	playerDatesOfBirth = []
 
-	path = os.environ['HOME'] + "/Desktop/" + "export.xlsx"
+	directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "players"
+	path = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "/" + leagueName + str(saison) + ".xlsx"		
+
+	if not os.path.exists(directory):
+		os.makedirs(directory)
 
 	for i in range(0,len(teamHyperlinks)):
 		tempIds, tempNames, tempHyperlinks = findPlayersFromTeam(teamHyperlinks[i])
+		sg.OneLineProgressMeter('Export', i, len(teamHyperlinks) + 1, 'key','Export of players from teams')
 		tempTeamName = teamNames[i]
 		print("Staring of import for " + teamNames[i])
 		for j in range(0, (len(tempIds))):
@@ -40,4 +47,6 @@ def generateListOfPlayersFromLeague(LeagueHyperlink):
 
 	df = pd.DataFrame({"ID":playerIds,"NAME":playerNames, "TEAM":playerTeams,"HYPERLINK":playerHyperlinks, "DATE OF BIRTH":playerDatesOfBirth, "POSITION":playerPositions, "AGENT":playerAgents})
 	df.to_excel(path)
+
+	sg.Popup("End of export")
 

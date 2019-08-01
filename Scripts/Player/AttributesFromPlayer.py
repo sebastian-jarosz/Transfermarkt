@@ -10,6 +10,8 @@ def findPlayerAttributes(playerHyperlink):
                 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
     
     page = playerHyperlink
+
+    print(playerHyperlink)
     
     #Getting full page
     pageTree = requests.get(page, headers=headers)
