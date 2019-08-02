@@ -2,6 +2,7 @@ import PySimpleGUI as sg
 import datetime
 from Scripts.League.PlayersFromLeague import generateListOfPlayersFromLeague
 import os
+from sys import platform
 
 #GUI VARIABLES
 
@@ -27,6 +28,11 @@ for i in range(0, 10):
 QUEUES = []
 for i in range(1, 37):
     QUEUES.append(i)
+	
+if platform == "darwin":
+		image = os.environ['HOME'] + "/Desktop/GitLab/Transfermarkt/Transfermarkt/GUI/Logo.png"
+if platform == "win32":
+		image = os.environ['HOMEPATH'] + "\Desktop\MyProjects\Transfermarkt\GUI\Logo.png"	
 
 tab1_layout =  [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonly="True")],
                 [sg.Text("Season"), sg.Combo(SEASONS, size=(100,100), readonly="True")],
@@ -37,7 +43,7 @@ tab2_layout = [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonl
                [sg.Text("Queue"), sg.Combo(QUEUES, size=(100,100), readonly="True")],
                [sg.ReadButton('Export matches')]]
 
-layout = [[sg.Image(os.environ['HOME'] + "/Desktop/GitLab/Transfermarkt/Transfermarkt/GUI/Logo.png", 
+layout = [[sg.Image(image, 
            pad=(100, 0))],
           [sg.TabGroup([[sg.Tab('Players from league', tab1_layout),
                          sg.Tab('Matches from queue', tab2_layout)]], pad=((100, 100), (100,100)))],

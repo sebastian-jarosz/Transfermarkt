@@ -9,7 +9,8 @@ import time
 import pandas as pd
 from pathlib import Path
 import os
-import caffeine
+from sys import platform
+#import caffeine
 
 def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 	teamIds, teamNames, teamHyperlinks = findTeamsFromLeague(LeagueHyperlink)
@@ -22,12 +23,14 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 	playerAgents = []
 	playerDatesOfBirth = []
 
-	directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "players"
-	path = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "/" + leagueName + str(saison) + ".xlsx"		
-
+	if platform == "darwin":
+		directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "players"
+		path = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "/" + leagueName + str(saison) + ".xlsx"
+	if platform == "win32":
+		directory = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + leagueName + "players"
+		path = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + leagueName +  + leagueName + str(saison) + ".xlsx"
 	if not os.path.exists(directory):
 		os.makedirs(directory)
-
 	for i in range(0,len(teamHyperlinks)):
 		tempIds, tempNames, tempHyperlinks = findPlayersFromTeam(teamHyperlinks[i])
 		sg.OneLineProgressMeter('Export', i, len(teamHyperlinks) + 1, 'key','Export of players from teams')
