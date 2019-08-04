@@ -14,13 +14,15 @@ def getMatchesFormQueue(hyperlink):
     pageTree = requests.get(page, headers=headers)
     pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
 
-    allMatchesTags = pageSoup.findAll("a", {"class" : "ergebnis-link"})
-
-    matchScores = []
-    matchHyperlinks = []
+    allMatchesTags = pageSoup.findAll("span", {"class" : "ergebnis-box"})
+    aTags = []
 
     for matchTag in allMatchesTags:
-        matchScores.append(matchTag.text)
-        matchHyperlinks.append("https://www.transfermarkt.com" + matchTag['href'])
+        aTags.extend(matchTag.findAll("a"))        
+
+    matchHyperlinks = []
+
+    for aTag in aTags:
+        matchHyperlinks.append("https://www.transfermarkt.com" + aTag['href'])
 
     return matchHyperlinks

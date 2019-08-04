@@ -14,6 +14,9 @@ def getEventsFromMatch(matchHyperlink):
 	pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
 
 	startingLineUpIdsTags = pageSoup.findAll("span", {"class" : ["aufstellung-rueckennummer-name","spielprofil_tooltip", "tooltipstered"]})
+	if(len(startingLineUpIdsTags) == 0):	
+		startingLineUpTags = pageSoup.find("h2", text="Line-Ups").parent.parent
+		startingLineUpIdsTags = startingLineUpTags.findAll("a", {"class" : ["spielprofil_tooltip", "tooltipstered"]})
 	goalTableTags = pageSoup.find("div", {"id" : "sb-tore"})
 	substitutionsTableTags = pageSoup.find("div", {"id":"sb-wechsel"})
 	try:

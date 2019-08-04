@@ -24,16 +24,16 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 	playerDatesOfBirth = []
 
 	if platform == "darwin":
-		directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "players"
-		path = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "/" + str(saison) + "/" + "Players.xlsx"
+		directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "/" + str(saison)
+		path = directory + "/Players.xlsx"
 	if platform == "win32":
-		directory = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + leagueName + "players"
-		path = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + leagueName + "\\" + str(saison) + "\\" + "Players.xlsx"
+		directory = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + leagueName + "\\" + str(saison)
+		path = directory + "\Players.xlsx"
 	if not os.path.exists(directory):
 		os.makedirs(directory)
 	for i in range(0,len(teamHyperlinks)):
 		tempIds, tempNames, tempHyperlinks = findPlayersFromTeam(teamHyperlinks[i])
-		sg.OneLineProgressMeter('Export', i, len(teamHyperlinks) + 1, 'key','Export of players from teams')
+		sg.OneLineProgressMeter('Export', i+1, len(teamHyperlinks), 'key','Export of players from teams')
 		tempTeamName = teamNames[i]
 		print("Staring of import for " + teamNames[i])
 		for j in range(0, (len(tempIds))):

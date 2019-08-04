@@ -60,4 +60,4 @@ while True:
     elif event == 'Export players':
         generateListOfPlayersFromLeague(values[1], values[2].replace('/', '_'), generateLeagueSaisonHyperlink(LEAGUEMAP[values[1]], values[2].split('/')[0]))
     elif event == 'Export matches':
-        generateEventsFromQueue(values[5], generateLeagueSaisonQueueHyperlink(LEAGUEMAP[values[3]],values[4].split('/')[0], values[5]))
+        generateEventsFromQueue(values[3], values[4].replace('/', '_'), values[5], generateLeagueSaisonQueueHyperlink(LEAGUEMAP[values[3]],values[4].split('/')[0], values[5]))
