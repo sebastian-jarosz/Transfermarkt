@@ -1,6 +1,8 @@
 import PySimpleGUI as sg
 import datetime
 from Scripts.League.PlayersFromLeague import generateListOfPlayersFromLeague
+from Scripts.League.CreateLeagueSaisonHyperlink import *
+from Scripts.Match.EventsFromQueue import generateEventsFromQueue
 import os
 from sys import platform
 
@@ -26,7 +28,7 @@ for i in range(0, 10):
 
 #Queues    
 QUEUES = []
-for i in range(1, 37):
+for i in range(1, 38):
     QUEUES.append(i)
 	
 if platform == "darwin":
@@ -56,8 +58,6 @@ while True:
     if event is None or event == 'Exit':
         break
     elif event == 'Export players':
-        generateListOfPlayersFromLeague(values[1], values[2].replace('/', '_'), LEAGUEMAP[values[1]])
+        generateListOfPlayersFromLeague(values[1], values[2].replace('/', '_'), generateLeagueSaisonHyperlink(LEAGUEMAP[values[1]], values[2].split('/')[0]))
     elif event == 'Export matches':
-        print(LEAGUEMAP[values[3]])
-        print(values[4].split('/')[0])
-        print(values[5])
+        generateEventsFromQueue(values[5], generateLeagueSaisonQueueHyperlink(LEAGUEMAP[values[3]],values[4].split('/')[0], values[5]))

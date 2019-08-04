@@ -10,7 +10,7 @@ import pandas as pd
 from pathlib import Path
 import os
 from sys import platform
-#import caffeine
+import caffeine
 
 def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 	teamIds, teamNames, teamHyperlinks = findTeamsFromLeague(LeagueHyperlink)
@@ -25,10 +25,10 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 
 	if platform == "darwin":
 		directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "players"
-		path = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "/" + leagueName + str(saison) + ".xlsx"
+		path = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "/" + str(saison) + "/" + "Players.xlsx"
 	if platform == "win32":
 		directory = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + leagueName + "players"
-		path = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + leagueName +  + leagueName + str(saison) + ".xlsx"
+		path = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + leagueName + "\\" + str(saison) + "\\" + "Players.xlsx"
 	if not os.path.exists(directory):
 		os.makedirs(directory)
 	for i in range(0,len(teamHyperlinks)):
