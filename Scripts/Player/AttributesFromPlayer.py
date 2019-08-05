@@ -18,7 +18,10 @@ def findPlayerAttributes(playerHyperlink):
     pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
     
     #Get birthdate and trim left and right white signs
-    dateOfBirth = pageSoup.find("span", {"itemprop" : "birthDate"}).text.strip().split('(')[0].strip()
+    try:
+        dateOfBirth = pageSoup.find("span", {"itemprop" : "birthDate"}).text.strip().split('(')[0].strip()
+    except:
+        dateOfBirth = "None"
     #Get span with text "Position:" then get next span with actual position of player, then stip spaces
     position = pageSoup.find("span", text="Position:").findNext("span").text.strip()
     #Get span with text "Agent:" then get next span with actual agent of player, then stip spaces (try in case there is an agent)

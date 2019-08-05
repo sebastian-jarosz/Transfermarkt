@@ -13,6 +13,7 @@ from sys import platform
 import caffeine
 
 def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
+	sg.Popup("Start of export")
 	teamIds, teamNames, teamHyperlinks = findTeamsFromLeague(LeagueHyperlink)
 
 	playerIds = []
@@ -33,7 +34,7 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 		os.makedirs(directory)
 	for i in range(0,len(teamHyperlinks)):
 		tempIds, tempNames, tempHyperlinks = findPlayersFromTeam(teamHyperlinks[i])
-		sg.OneLineProgressMeter('Export', i+1, len(teamHyperlinks), 'key','Export of players from teams')
+		sg.OneLineProgressMeter('Export', i, len(teamHyperlinks), 'key','Export of players from teams')
 		tempTeamName = teamNames[i]
 		print("Staring of import for " + teamNames[i])
 		for j in range(0, (len(tempIds))):
@@ -47,9 +48,10 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 		playerIds.extend(tempIds)
 		playerNames.extend(tempNames)
 		playerHyperlinks.extend(tempHyperlinks)
-
+	
+	sg.OneLineProgressMeter('Export',  len(teamHyperlinks), len(teamHyperlinks), 'key','Export of players from teams')
 	df = pd.DataFrame({"ID":playerIds,"NAME":playerNames, "TEAM":playerTeams,"HYPERLINK":playerHyperlinks, "DATE OF BIRTH":playerDatesOfBirth, "POSITION":playerPositions, "AGENT":playerAgents})
 	df.to_excel(path)
-
+	
 	sg.Popup("End of export")
 
