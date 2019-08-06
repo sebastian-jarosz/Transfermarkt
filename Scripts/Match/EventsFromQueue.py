@@ -6,8 +6,9 @@ import pandas as pd
 from pathlib import Path
 import os
 from sys import platform
-import caffeine
 import PySimpleGUI as sg
+if platform == "darwin":
+    import caffeine
 
 
 def generateEventsFromQueue(leagueName, saison, queueNumber, queueHyperlink):

@@ -10,7 +10,8 @@ import pandas as pd
 from pathlib import Path
 import os
 from sys import platform
-import caffeine
+if platform == "darwin":
+	import caffeine
 
 def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 	sg.Popup("Start of export")
