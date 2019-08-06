@@ -15,10 +15,10 @@ def generateEventsFromQueue(leagueName, saison, queueNumber, queueHyperlink):
     sg.Popup("Start of export")
     print("Start of export for " + leagueName + " " + str(saison) + " " + str(queueNumber))
     if platform == "darwin":
-        directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "/" + str(saison) + "/Matches"
+        directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + str(saison) + "/" + leagueName + "/Matches"
         path = directory + "/" + str(queueNumber) + ".xlsx"
     if platform == "win32":
-        directory = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + leagueName + "\\" + str(saison) + "\Matches"
+        directory = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + str(saison) + "\\" + leagueName + "\Matches"
         path = directory + "\\" + str(queueNumber) + ".xlsx"
     matchesHyperlinks = getMatchesFormQueue(queueHyperlink)
     if not os.path.exists(directory):
