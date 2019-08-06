@@ -37,7 +37,7 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 		tempIds, tempNames, tempHyperlinks = findPlayersFromTeam(teamHyperlinks[i])
 		sg.OneLineProgressMeter('Export', i, len(teamHyperlinks), 'key','Export of players from teams')
 		tempTeamName = teamNames[i]
-		print("Staring of import for " + teamNames[i])
+		print("Start of import for " + teamNames[i])
 		for j in range(0, (len(tempIds))):
 			playerTeams.append(tempTeamName)
 			time.sleep(1)

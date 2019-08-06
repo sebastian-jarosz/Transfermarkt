@@ -13,7 +13,7 @@ if platform == "darwin":
 
 def generateEventsFromQueue(leagueName, saison, queueNumber, queueHyperlink):
     sg.Popup("Start of export")
-    print(queueHyperlink)
+    print("Start of export for " + leagueName + " " + str(saison) + " " + str(queueNumber))
     if platform == "darwin":
         directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + leagueName + "/" + str(saison) + "/Matches"
         path = directory + "/" + str(queueNumber) + ".xlsx"
@@ -51,4 +51,5 @@ def generateEventsFromQueue(leagueName, saison, queueNumber, queueHyperlink):
     df4.to_excel(writer, "IN")
     df5.to_excel(writer, "OUT")
     writer.save()
+    print("End of export for " + leagueName + " " + str(saison) + " " + str(queueNumber))
     sg.Popup("End of export")  
