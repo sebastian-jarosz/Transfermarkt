@@ -26,10 +26,10 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 	playerDatesOfBirth = []
 
 	if platform == "darwin":
-		directory = os.environ['HOME'] + "/Desktop/Transfermark Export/" + str(saison) + "/" + leagueName
+		directory = os.environ['HOME'] + "/Desktop/Transfermarkt Export/" + str(saison) + "/" + leagueName
 		path = directory + "/Players.xlsx"
 	if platform == "win32":
-		directory = os.environ['HOMEPATH'] + "\Desktop\Transfermark Export\\" + str(saison) + "\\" + leagueName
+		directory = os.environ['HOMEPATH'] + "\Desktop\Transfermarkt Export\\" + str(saison) + "\\" + leagueName
 		path = directory + "\Players.xlsx"
 	if not os.path.exists(directory):
 		os.makedirs(directory)
