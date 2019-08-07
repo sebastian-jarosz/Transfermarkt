@@ -51,7 +51,7 @@ layout = [[sg.Image(image,
                          sg.Tab('Matches from queue', tab2_layout)]], pad=((100, 100), (100,100)))],
           [sg.Exit()]]
 
-window = sg.Window('S4S Transfermarkt Data Manager').Layout(layout)
+window = sg.Window('S4S Transfermarkt Data Generator').Layout(layout)
 
 while True:
     event, values = window.Read()
