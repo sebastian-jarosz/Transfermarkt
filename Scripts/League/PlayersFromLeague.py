@@ -41,7 +41,7 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 		print("Start of import for " + teamNames[i])
 		for j in range(0, (len(tempIds))):
 			playerTeams.append(tempTeamName)
-			time.sleep(1)
+			time.sleep(1.5)
 			tempDateOfBirth, tempPosition, tempAgent, tempFoot = findPlayerAttributes(tempHyperlinks[j])
 			playerDatesOfBirth.append(tempDateOfBirth)
 			playerPositions.append(tempPosition)

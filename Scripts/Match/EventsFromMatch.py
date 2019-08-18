@@ -42,7 +42,7 @@ def getEventsFromMatch(matchHyperlink, saison):
 	inTimes = []
 
 	for idTag in startingLineUpIdsTags:
-		time.sleep(0.25)
+		time.sleep(1)
 		playerLink = "https://www.transfermarkt.com/a/leistungsdatendetails/spieler/" + idTag['id'] + "/plus/0?saison=" + saison.split('_')[0] + "&verein=&liga=&wettbewerb=&pos=&trainer_id="
 		playerPageTree = requests.get(playerLink, headers=headers)
 		playerPageSoup = BeautifulSoup(playerPageTree.content, 'html.parser')
@@ -65,7 +65,7 @@ def getEventsFromMatch(matchHyperlink, saison):
 		inPlayerTags.extend(inPlayerSpanTag.findAll("a", {"class" : "wichtig"}))
 
 	for i in range(0,len(inPlayerTags)):
-		time.sleep(0.25)
+		time.sleep(1)
 		playerLink = "https://www.transfermarkt.com/a/leistungsdatendetails/spieler/" + (inPlayerTags[i])['id'] + "/plus/0?saison=" + saison.split('_')[0] + "&verein=&liga=&wettbewerb=&pos=&trainer_id="
 		playerPageTree = requests.get(playerLink, headers=headers)
 		playerPageSoup = BeautifulSoup(playerPageTree.content, 'html.parser')
