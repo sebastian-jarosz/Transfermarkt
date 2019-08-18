@@ -31,5 +31,8 @@ def findPlayerAttributes(playerHyperlink):
             agent = agent.split("\"")[3]
     except:
         agent = "None"
-    
-    return dateOfBirth, position, agent
+    try:
+        foot = pageSoup.find("th", text="Foot:").findNext("td").getText()
+    except:
+        foot = "No information"    
+    return dateOfBirth, position, agent, foot

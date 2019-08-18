@@ -1,9 +1,9 @@
 import requests 
 from bs4 import BeautifulSoup
 import pandas as pd
-from Scripts.Match.MatchesFromQueue import getMatchesFormQueue
+from Scripts.Match.EventsFromMatch import getEventsFromMatch
+from Scripts.Player.AttributesFromPlayer import findPlayerAttributes
 
-print(getMatchesFormQueue("https://www.transfermarkt.com/3-liga-group-ii/spieltag/wettbewerb/PL32/plus/?saison_id=2019&spieltag=1"))
-
-
-
+playersInMatchIds, playersInMatchTimes, goalsIds, assistsIds = getEventsFromMatch("https://www.transfermarkt.com/spielbericht/index/spielbericht/3192608", "2019_2020")
+print(playersInMatchIds)
+print(playersInMatchTimes)

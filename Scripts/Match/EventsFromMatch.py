@@ -1,13 +1,15 @@
 import requests 
 from bs4 import BeautifulSoup
 import pandas as pd
+import time
 
-def getEventsFromMatch(matchHyperlink):
+def getEventsFromMatch(matchHyperlink, saison):
 	#For pretending being a browser
 	headers = {'User-Agent': 
 				'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
 
 	page = matchHyperlink
+	matchId = matchHyperlink.rsplit('/', 1)[1]
 
 	#Getting full page
 	pageTree = requests.get(page, headers=headers)
@@ -30,14 +32,23 @@ def getEventsFromMatch(matchHyperlink):
 	inPlayerTags = []
 
 
+	playersInMatchIds = []
+	playersInMatchTimes = []
 	startingLineUpIds = []
+	startingLineUpsTimes = []
 	goalsIds = []
 	assistsIds = []
-	outIds = []
 	inIds = []
+	inTimes = []
 
-	for IdTag in startingLineUpIdsTags:
-		startingLineUpIds.append(IdTag["id"])
+	for idTag in startingLineUpIdsTags:
+		time.sleep(0.25)
+		playerLink = "https://www.transfermarkt.com/a/leistungsdatendetails/spieler/" + idTag['id'] + "/plus/0?saison=" + saison.split('_')[0] + "&verein=&liga=&wettbewerb=&pos=&trainer_id="
+		playerPageTree = requests.get(playerLink, headers=headers)
+		playerPageSoup = BeautifulSoup(playerPageTree.content, 'html.parser')
+		minutes = playerPageSoup.find("a", {"id" : matchId}).findParent().findParent().find("td", {"class":"rechts"}).getText().split('\'')[0]
+		startingLineUpIds.append(idTag['id'])
+		startingLineUpsTimes.append(minutes)
 
 	for i in range(0, len(goalPlayersTags)):
 		#if even number
@@ -53,13 +64,22 @@ def getEventsFromMatch(matchHyperlink):
 	for inPlayerSpanTag in inPlayerSpanTags:
 		inPlayerTags.extend(inPlayerSpanTag.findAll("a", {"class" : "wichtig"}))
 
-	for i in range(0,len(outPlayerTags)):
-		outIds.append((outPlayerTags[i])['id'])
-
 	for i in range(0,len(inPlayerTags)):
+		time.sleep(0.25)
+		playerLink = "https://www.transfermarkt.com/a/leistungsdatendetails/spieler/" + (inPlayerTags[i])['id'] + "/plus/0?saison=" + saison.split('_')[0] + "&verein=&liga=&wettbewerb=&pos=&trainer_id="
+		playerPageTree = requests.get(playerLink, headers=headers)
+		playerPageSoup = BeautifulSoup(playerPageTree.content, 'html.parser')
+		minutes = playerPageSoup.find("a", {"id": matchId}).findParent().findParent().find("td", {"class":"rechts"}).getText().split('\'')[0]
 		inIds.append((inPlayerTags[i])['id'])
+		inTimes.append(minutes)
 
-	return startingLineUpIds, goalsIds, assistsIds, inIds, outIds
+
+	playersInMatchIds.extend(startingLineUpIds)	
+	playersInMatchIds.extend(inIds)
+	playersInMatchTimes.extend(startingLineUpsTimes)
+	playersInMatchTimes.extend(inTimes)	
+
+	return playersInMatchIds, playersInMatchTimes, goalsIds, assistsIds
 
 
 

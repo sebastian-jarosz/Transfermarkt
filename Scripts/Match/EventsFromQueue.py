@@ -29,27 +29,25 @@ def generateEventsFromQueue(leagueName, saison, queueNumber, queueHyperlink):
     tempTable3 = []
     tempTable4 = []
     tempTable5 = []
+
     for i in range(0, len(matchesHyperlinks)):
         sg.OneLineProgressMeter('Export', i, len(matchesHyperlinks), 'key','Export of events from queue')
         print(matchesHyperlinks[i])
         time.sleep(1)
-        tempStartingLineUpIds, tempGoalsIds, tempAssistsIds, tempInIds, tempOutIds = getEventsFromMatch(matchesHyperlinks[i])
-        tempTable1.append(tempStartingLineUpIds)
-        tempTable2.append(tempGoalsIds) 
-        tempTable3.append(tempAssistsIds) 
-        tempTable4.append(tempInIds) 
-        tempTable5.append(tempOutIds)
+        tempPlayersInMatchIds, tempPlayersInMatchTimes, tempGoalsIds, tempAssistsIds = getEventsFromMatch(matchesHyperlinks[i], saison)
+        tempTable1.extend(tempPlayersInMatchIds)
+        tempTable2.extend(tempPlayersInMatchTimes) 
+        tempTable3.append(tempGoalsIds) 
+        tempTable4.append(tempAssistsIds)
+
     sg.OneLineProgressMeter('Export',  len(matchesHyperlinks), len(matchesHyperlinks), 'key','Export of events from queue')
     df1 = pd.DataFrame(tempTable1)
-    df2 = pd.DataFrame(tempTable2)
-    df3 = pd.DataFrame(tempTable3)
-    df4 = pd.DataFrame(tempTable4)
-    df5 = pd.DataFrame(tempTable5)
-    df1.to_excel(writer, "SQUAD")
+    df1['TIMES'] = tempTable2
+    df2 = pd.DataFrame(tempTable3)
+    df3 = pd.DataFrame(tempTable4)
+    df1.to_excel(writer, "PLAYERSINMATCH")
     df2.to_excel(writer, "GOALS")
     df3.to_excel(writer, "ASSISTS")
-    df4.to_excel(writer, "IN")
-    df5.to_excel(writer, "OUT")
     writer.save()
     print("End of export for " + leagueName + " " + str(saison) + " " + str(queueNumber))
     sg.Popup("End of export")  

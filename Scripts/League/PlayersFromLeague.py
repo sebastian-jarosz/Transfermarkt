@@ -22,6 +22,7 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 	playerTeams = []
 	playerHyperlinks = []
 	playerPositions = []
+	playerFoots = []
 	playerAgents = []
 	playerDatesOfBirth = []
 
@@ -41,9 +42,10 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 		for j in range(0, (len(tempIds))):
 			playerTeams.append(tempTeamName)
 			time.sleep(1)
-			tempDateOfBirth, tempPosition, tempAgent = findPlayerAttributes(tempHyperlinks[j])
+			tempDateOfBirth, tempPosition, tempAgent, tempFoot = findPlayerAttributes(tempHyperlinks[j])
 			playerDatesOfBirth.append(tempDateOfBirth)
 			playerPositions.append(tempPosition)
+			playerFoots.append(tempFoot)
 			playerAgents.append(tempAgent)
 		print("End of import for " + teamNames[i])
 		playerIds.extend(tempIds)
@@ -51,7 +53,7 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 		playerHyperlinks.extend(tempHyperlinks)
 	
 	sg.OneLineProgressMeter('Export',  len(teamHyperlinks), len(teamHyperlinks), 'key','Export of players from teams')
-	df = pd.DataFrame({"ID":playerIds,"NAME":playerNames, "TEAM":playerTeams,"HYPERLINK":playerHyperlinks, "DATE OF BIRTH":playerDatesOfBirth, "POSITION":playerPositions, "AGENT":playerAgents})
+	df = pd.DataFrame({"ID":playerIds,"NAME":playerNames, "TEAM":playerTeams,"HYPERLINK":playerHyperlinks, "DATE OF BIRTH":playerDatesOfBirth, "POSITION":playerPositions, "FOOT":playerFoots, "AGENT":playerAgents})
 	df.to_excel(path)
 	
 	sg.Popup("End of export")
