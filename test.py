@@ -7,3 +7,4 @@ from Scripts.Player.AttributesFromPlayer import findPlayerAttributes
 playersInMatchIds, playersInMatchTimes, goalsIds, assistsIds = getEventsFromMatch("https://www.transfermarkt.com/spielbericht/index/spielbericht/3192608", "2019_2020")
 print(playersInMatchIds)
 print(playersInMatchTimes)
+print("elo")
