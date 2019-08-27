@@ -32,7 +32,7 @@ for i in range(1, 38):
     QUEUES.append(i)
 	
 if platform == "darwin":
-		image = os.environ['HOME'] + "/Desktop/GitLab/Transfermarkt/GUI/Logo.png"
+		image = os.environ['HOME'] + "/Desktop/GitHub/Transfermarkt/GUI/Logo.png"
 if platform == "win32":
 		image = os.environ['HOMEPATH'] + "\Desktop\MyProjects\Transfermarkt\GUI\Logo.png"	
 
