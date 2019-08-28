@@ -9,6 +9,8 @@ from sys import platform
 #GUI VARIABLES
 
 #Leagues
+LEAGUECOUNTRIES = {}
+
 LEAGUENAMES = ['Ekstraklasa', 'I liga', 'II liga', 'III liga - I Grupa', 'III liga - II Grupa', 'III liga - III Grupa', 'III liga - IV Grupa']
 
 LEAGUEMAP = {'Ekstraklasa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL1',

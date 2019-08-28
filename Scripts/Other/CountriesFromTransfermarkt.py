@@ -2,21 +2,25 @@ import os
 import requests 
 from bs4 import BeautifulSoup
 import pandas as pd
+import codecs
 
 
  #For pretending being a browser
 headers = {'User-Agent': 
             'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
 
-page = 'https://www.transfermarkt.com'
+#1580 line
+f=codecs.open("transfermarkt.html", 'r')
     
 #Getting full page
-pageTree = requests.get(page, headers=headers)
-pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
+# pageTree = requests.get(f.read(), headers=headers)
+pageSoup = BeautifulSoup(f, 'html.parser')
 
 countryNames = []
 
-# countriesList = pageSoup.find("div", {"class" :["chzn-container", "chzn-container-single" , "chzn-container-active"]})
-countriesList = pageSoup.find("select", {"id" : "land_select_breadcrumb"})
-# test = countriesList.find("div", {"class" : "land_select_breadcrumb_chzn"})
+countriesList = pageSoup.find("select", {"data-placeholder" : "Country"}).find_all('option')
+
 print(countriesList)
+
+for country in countriesList:
+    print(country)
