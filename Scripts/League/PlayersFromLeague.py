@@ -13,7 +13,7 @@ from sys import platform
 if platform == "darwin":
 	import caffeine
 
-def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
+def generateListOfPlayersFromLeague(countryName, leagueName, saison, LeagueHyperlink):
 	sg.Popup("Start of export")
 	teamIds, teamNames, teamHyperlinks = findTeamsFromLeague(LeagueHyperlink)
 
@@ -27,10 +27,10 @@ def generateListOfPlayersFromLeague(leagueName, saison, LeagueHyperlink):
 	playerDatesOfBirth = []
 
 	if platform == "darwin":
-		directory = os.environ['HOME'] + "/Desktop/Transfermarkt Export/" + str(saison) + "/" + leagueName
+		directory = os.environ['HOME'] + "/Desktop/Transfermarkt Export/" + countryName + "/"+ str(saison) + "/" + leagueName
 		path = directory + "/Players.xlsx"
 	if platform == "win32":
-		directory = os.environ['HOMEPATH'] + "\Desktop\Transfermarkt Export\\" + str(saison) + "\\" + leagueName
+		directory = os.environ['HOMEPATH'] + "\Desktop\Transfermarkt Export\\" + countryName + "\\" + str(saison) + "\\" + leagueName
 		path = directory + "\Players.xlsx"
 	if not os.path.exists(directory):
 		os.makedirs(directory)

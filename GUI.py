@@ -3,15 +3,19 @@ import datetime
 from Scripts.League.PlayersFromLeague import generateListOfPlayersFromLeague
 from Scripts.League.CreateLeagueSaisonHyperlink import *
 from Scripts.Match.EventsFromQueue import generateEventsFromQueue
+from Scripts.Other.CountriesFromTransfermarkt import getCountriesFromFile
 import os
 from sys import platform
 
 #GUI VARIABLES
 
 #Leagues
-LEAGUECOUNTRIES = {}
+COUNTRIES = []
+countriesJSON = getCountriesFromFile()
+for country in countriesJSON.keys():
+    COUNTRIES.append(country)
 
-LEAGUENAMES = ['Ekstraklasa', 'I liga', 'II liga', 'III liga - I Grupa', 'III liga - II Grupa', 'III liga - III Grupa', 'III liga - IV Grupa']
+LEAGUENAMES = []
 
 LEAGUEMAP = {'Ekstraklasa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL1',
              'I liga' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL2',
@@ -38,28 +42,49 @@ if platform == "darwin":
 if platform == "win32":
 		image = os.environ['HOMEPATH'] + "\Desktop\MyProjects\Transfermarkt\GUI\Logo.png"	
 
-tab1_layout =  [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonly="True")],
-                [sg.Text("Season"), sg.Combo(SEASONS, size=(100,100), readonly="True")],
-                [sg.ReadButton('Export players')]]
+tab1_layout = [[sg.Text("Country"), sg.Combo(COUNTRIES, size=(100,100), readonly="True", key='Country')],
+               [sg.ReadButton('Change country')]]
 
-tab2_layout = [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonly="True")],
-               [sg.Text("Season"), sg.Combo(SEASONS, size=(100,100), readonly="True")],
-               [sg.Text("Queue"), sg.Combo(QUEUES, size=(100,100), readonly="True")],
+tab2_layout = [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonly="True", key='LeaguePlayers')],
+               [sg.Text("Season"), sg.Combo(SEASONS, size=(100,100), readonly="True", key='SeasonPlayers')],
+               [sg.ReadButton('Export players')]]
+
+tab3_layout = [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonly="True", key="LeagueMatches")],
+               [sg.Text("Season"), sg.Combo(SEASONS, size=(100,100), readonly="True", key="SeasonMatches")],
+               [sg.Text("Queue"), sg.Combo(QUEUES, size=(100,100), readonly="True", key="QueueMatches")],
                [sg.ReadButton('Export matches')]]
 
 layout = [[sg.Image(image, 
            pad=(100, 0))],
-          [sg.TabGroup([[sg.Tab('Players from league', tab1_layout),
-                         sg.Tab('Matches from queue', tab2_layout)]], pad=((100, 100), (100,100)))],
+          [sg.TabGroup([[sg.Tab('CHANGE COUNTRY FIRST', tab1_layout),
+                         sg.Tab('Players from league', tab2_layout),
+                         sg.Tab('Matches from queue', tab3_layout)]], pad=((100, 100), (100,100)))],
           [sg.Exit()]]
 
 window = sg.Window('S4S Transfermarkt Data Generator').Layout(layout)
 
 while True:
     event, values = window.Read()
+
     if event is None or event == 'Exit':
         break
-    elif event == 'Export players':
-        generateListOfPlayersFromLeague(values[1], values[2].replace('/', '_'), generateLeagueSaisonHyperlink(LEAGUEMAP[values[1]], values[2].split('/')[0]))
-    elif event == 'Export matches':
-        generateEventsFromQueue(values[3], values[4].replace('/', '_'), values[5], generateLeagueSaisonQueueHyperlink(LEAGUEMAP[values[3]],values[4].split('/')[0], values[5]))
+
+    elif event is 'Change country':
+        LEAGUENAMES = []
+        for league in countriesJSON[values['Country']]['leagues']:
+            LEAGUENAMES.append(league['name'])
+        window.FindElement('LeaguePlayers').Update(values=LEAGUENAMES)    
+        window.FindElement('LeagueMatches').Update(values=LEAGUENAMES)    
+
+    elif event is 'Export players':
+        leagueHyperlink = None
+        for league in countriesJSON[values['Country']]['leagues']:
+            if league['name'] == values['LeaguePlayers']:
+                leagueHyperlink = league['hyperlink']
+        generateListOfPlayersFromLeague(countriesJSON[values['Country']]['name'], values['LeaguePlayers'], values['SeasonPlayers'].replace('/', '_'), leagueHyperlink)
+    elif event is 'Export matches':
+        leagueHyperlink = None
+        for league in countriesJSON[values['Country']]['leagues']:
+            if league['name'] == values['LeagueMatches']:
+                leagueHyperlink = league['hyperlink']
+        generateEventsFromQueue(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), values['QueueMatches'], generateLeagueSaisonQueueHyperlink(leagueHyperlink, values['SeasonMatches'].split('/')[0], values['QueueMatches']))
