@@ -26,11 +26,13 @@ def findPlayerAttributes(playerHyperlink):
     position = pageSoup.find("span", text="Position:").findNext("span").text.strip()
     #Get span with text "Agent:" then get next span with actual agent of player, then stip spaces (try in case there is an agent)
     try:
-        agent = pageSoup.find("span", text="Agent:").findNext("a")["title"]
-        if(agent.startswith("<span")):
-            agent = agent.split("\"")[3]
+        agent = pageSoup.find("span", text="Agent:").findNext("span").text.strip()
+        if(agent.endswith("...")):
+            agent = pageSoup.find("span", text="Agent:").findNext("a")["title"]
+            if(agent.startswith("<span")):
+                agent = agent.split("\"")[3]
     except:
-        agent = "None"
+        agent = "None" 
     try:
         foot = pageSoup.find("th", text="Foot:").findNext("td").getText()
     except:
