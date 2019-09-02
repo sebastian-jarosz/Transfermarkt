@@ -5,12 +5,10 @@ import pandas as pd
 import codecs
 import json
 from Scripts.Other.LeaguesFromCountries import getLeaguesFromCountry
+from sys import platform
 
 
 def getCountriesFromTransfermarkt():
-    #For pretending being a browser
-    headers = {'User-Agent': 
-                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
 
     #1580 line
     htmlpath = os.path.realpath(__file__)
@@ -45,6 +43,10 @@ def getCountriesFromTransfermarkt():
 
 def getCountriesFromFile():
     htmlpath = os.path.realpath(__file__)
-    f=codecs.open(htmlpath.rsplit('/', 1)[0] + '/data.txt', 'r', encoding='utf-8', errors=' ignore')
+
+    if platform == "darwin": 
+        f=codecs.open(htmlpath.rsplit('/', 1)[0] + '/data.txt', 'r', encoding='utf-8', errors=' ignore')
+    if platform == "win32":
+        f=codecs.open(htmlpath.rsplit('\\', 1)[0] + '\data.txt', 'r', encoding='utf-8', errors=' ignore')
     countries = json.load(f)  
     return countries
