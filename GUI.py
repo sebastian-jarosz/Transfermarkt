@@ -5,7 +5,22 @@ from Scripts.League.CreateLeagueSaisonHyperlink import *
 from Scripts.Match.EventsFromQueue import generateEventsFromQueue
 from Scripts.Other.CountriesFromTransfermarkt import getCountriesFromFile
 import os
+import logging
+import sys
 from sys import platform
+
+#logging info
+logPath = os.path.realpath(__file__)
+
+logging.basicConfig(filename=logPath.rsplit('/', 1)[0] + '/app.log', filemode='w')
+root = logging.getLogger()
+root.setLevel(logging.DEBUG)
+
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+root.addHandler(handler)
 
 #GUI VARIABLES
 
@@ -84,7 +99,8 @@ while True:
         try:        
             generateListOfPlayersFromLeague(countriesJSON[values['Country']]['name'], values['LeaguePlayers'], values['SeasonPlayers'].replace('/', '_'), leagueHyperlink)
         except:
-            print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'])    
+            print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'])
+            logging.error("Exception occurred", exc_info=True)    
             sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + ". Did You change countries?")    
     elif event is 'Export matches':
         leagueHyperlink = None
@@ -93,7 +109,8 @@ while True:
                 leagueHyperlink = league['hyperlink']
         try:        
             generateEventsFromQueue(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), values['QueueMatches'], generateLeagueSaisonQueueHyperlink(leagueHyperlink, values['SeasonMatches'].split('/')[0], values['QueueMatches']))
-        except:
-            print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'])    
+        except Exception as e:
+            print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'])
+            logging.error("Exception occurred", exc_info=True)    
             sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'] + ". Did You change countries?")    
 

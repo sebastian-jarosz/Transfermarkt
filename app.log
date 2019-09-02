@@ -1,0 +1,94 @@
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /jumplist/startseite/wettbewerb/LET1 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /fc-caramba-dinamo/startseite/verein/48325/saison_id/2018 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /roberts-ozols/profil/spieler/271607 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /maksims-uvarenko/profil/spieler/62536 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /nils-purins/profil/spieler/328748 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /herdi-prenga/profil/spieler/160505 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /elvis-stuglis/profil/spieler/150232 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /antonijs-cernomordijs/profil/spieler/271099 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /antons-kurakins/profil/spieler/101954 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /joel-bopesu/profil/spieler/373941 HTTP/1.1" 200 None
+DEBUG:chardet.charsetprober:EUC-JP Japanese prober hit error at byte 119288
+DEBUG:chardet.charsetprober:GB2312 Chinese prober hit error at byte 119290
+DEBUG:chardet.charsetprober:EUC-KR Korean prober hit error at byte 119288
+DEBUG:chardet.charsetprober:CP949 Korean prober hit error at byte 119288
+DEBUG:chardet.charsetprober:Big5 Chinese prober hit error at byte 119290
+DEBUG:chardet.charsetprober:EUC-TW Taiwan prober hit error at byte 6052
+DEBUG:chardet.charsetprober:utf-8 not active
+DEBUG:chardet.charsetprober:SHIFT_JIS Japanese confidence = 0.01
+DEBUG:chardet.charsetprober:EUC-JP not active
+DEBUG:chardet.charsetprober:GB2312 not active
+DEBUG:chardet.charsetprober:EUC-KR not active
+DEBUG:chardet.charsetprober:CP949 not active
+DEBUG:chardet.charsetprober:Big5 not active
+DEBUG:chardet.charsetprober:EUC-TW not active
+DEBUG:chardet.charsetprober:windows-1251 Russian confidence = 0.01
+DEBUG:chardet.charsetprober:KOI8-R Russian confidence = 0.01
+DEBUG:chardet.charsetprober:ISO-8859-5 Russian confidence = 0.01
+DEBUG:chardet.charsetprober:MacCyrillic Russian confidence = 0.0
+DEBUG:chardet.charsetprober:IBM866 Russian confidence = 0.0
+DEBUG:chardet.charsetprober:IBM855 Russian confidence = 0.01
+DEBUG:chardet.charsetprober:ISO-8859-7 Greek confidence = 0.0
+DEBUG:chardet.charsetprober:windows-1253 Greek confidence = 0.0
+DEBUG:chardet.charsetprober:ISO-8859-5 Bulgairan confidence = 0.01
+DEBUG:chardet.charsetprober:windows-1251 Bulgarian confidence = 0.01
+DEBUG:chardet.charsetprober:TIS-620 Thai confidence = 0.0
+DEBUG:chardet.charsetprober:ISO-8859-9 Turkish confidence = 0.5532935141586828
+DEBUG:chardet.charsetprober:windows-1255 Hebrew confidence = 0.0
+DEBUG:chardet.charsetprober:windows-1255 Hebrew confidence = 0.0
+DEBUG:chardet.charsetprober:windows-1255 Hebrew confidence = 0.0
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /vladislavs-gabovs/profil/spieler/120463 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+ERROR:root:Exception occurred
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/urllib3/connectionpool.py", line 379, in _make_request
+    httplib_response = conn.getresponse(buffering=True)
+TypeError: getresponse() got an unexpected keyword argument 'buffering'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "desktop/GitHub/Transfermarkt/GUI.py", line 100, in <module>
+    generateListOfPlayersFromLeague(countriesJSON[values['Country']]['name'], values['LeaguePlayers'], values['SeasonPlayers'].replace('/', '_'), leagueHyperlink)
+  File "/Users/Sebastian/Desktop/GitHub/Transfermarkt/Scripts/League/PlayersFromLeague.py", line 45, in generateListOfPlayersFromLeague
+    tempDateOfBirth, tempPosition, tempAgent, tempFoot = findPlayerAttributes(tempHyperlinks[j])
+  File "/Users/Sebastian/Desktop/GitHub/Transfermarkt/Scripts/Player/AttributesFromPlayer.py", line 17, in findPlayerAttributes
+    pageTree = requests.get(page, headers=headers)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/api.py", line 75, in get
+    return request('get', url, params=params, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/adapters.py", line 449, in send
+    timeout=timeout
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/urllib3/connectionpool.py", line 603, in urlopen
+    chunked=chunked)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/urllib3/connectionpool.py", line 383, in _make_request
+    httplib_response = conn.getresponse()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/http/client.py", line 1321, in getresponse
+    response.begin()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/http/client.py", line 296, in begin
+    version, status, reason = self._read_status()
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/http/client.py", line 257, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/socket.py", line 589, in readinto
+    return self._sock.recv_into(b)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/ssl.py", line 1049, in recv_into
+    return self.read(nbytes, buffer)
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/ssl.py", line 908, in read
+    return self._sslobj.read(len, buffer)
+KeyboardInterrupt
