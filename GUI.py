@@ -12,7 +12,10 @@ from sys import platform
 #logging info
 logPath = os.path.realpath(__file__)
 
-logging.basicConfig(filename=logPath.rsplit('/', 1)[0] + '/app.log', filemode='w')
+if platform == "darwin":
+    logging.basicConfig(filename=logPath.rsplit('/', 1)[0] + '/app.log', filemode='w')
+if platform == "win32":
+    logging.basicConfig(filename=logPath.rsplit('\\', 1)[0] + '/app.log', filemode='w')
 root = logging.getLogger()
 root.setLevel(logging.DEBUG)
 
