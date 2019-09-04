@@ -12,7 +12,10 @@ def getCountriesFromTransfermarkt():
 
     #1580 line
     htmlpath = os.path.realpath(__file__)
-    htmlpath = htmlpath.rsplit('/', 1)[0] + "/transfermarkt.html"
+    if platform == "darwin":
+        htmlpath = htmlpath.rsplit('/', 1)[0] + "/transfermarkt.html"
+    if platform == "win32":
+        htmlpath = htmlpath.rsplit('\\', 1)[0] + "/transfermarkt.html"
 
     f=codecs.open(htmlpath, 'r', encoding='utf-8', errors=' ignore')
 

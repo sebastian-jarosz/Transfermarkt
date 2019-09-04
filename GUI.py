@@ -35,14 +35,6 @@ for country in countriesJSON.keys():
 
 LEAGUENAMES = []
 
-LEAGUEMAP = {'Ekstraklasa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL1',
-             'I liga' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL2',
-             'II liga' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL2L',
-             'III liga - I Grupa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL31',
-             'III liga - II Grupa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL32',
-             'III liga - III Grupa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL33',
-             'III liga - IV Grupa' : 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL34'}
-
 #Get 10 years from this year
 SEASONS = []
 year = datetime.datetime.today().year
@@ -99,17 +91,24 @@ while True:
         for league in countriesJSON[values['Country']]['leagues']:
             if league['name'] == values['LeaguePlayers']:
                 leagueHyperlink = league['hyperlink']
+        if leagueHyperlink is None:
+            sg.PopupError('Change country first. In ' + countriesJSON[values['Country']]['name'] + " there is no " + values['LeaguePlayers'])                
+            continue
         try:        
             generateListOfPlayersFromLeague(countriesJSON[values['Country']]['name'], values['LeaguePlayers'], values['SeasonPlayers'].replace('/', '_'), leagueHyperlink)
         except:
             print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'])
             logging.error("Exception occurred", exc_info=True)    
-            sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + ". Did You change countries?")    
+            sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'])   
+
     elif event is 'Export matches':
         leagueHyperlink = None
         for league in countriesJSON[values['Country']]['leagues']:
             if league['name'] == values['LeagueMatches']:
                 leagueHyperlink = league['hyperlink']
+        if leagueHyperlink is None:
+            sg.PopupError('Change country first. In ' + countriesJSON[values['Country']]['name'] + " there is no " + values['LeaguePlayers'])                
+            continue
         try:        
             generateEventsFromQueue(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), values['QueueMatches'], generateLeagueSaisonQueueHyperlink(leagueHyperlink, values['SeasonMatches'].split('/')[0], values['QueueMatches']))
         except Exception as e:
