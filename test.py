@@ -37,17 +37,23 @@ print(leaguesHyperlinks[0])
 teamIds, teamNames, teamHyperlinks = findTeamsFromLeague(leaguesHyperlinks[0])
 
 p = Pool(50)
-recordsPlayersFromTeams = p.map(findPlayersFromTeam, teamHyperlinks)
+recordsTeamsWithPlayers = p.map(findPlayersFromTeam, teamHyperlinks)
 p.terminate()
 p.join()
 
-print(recordsPlayersFromTeams[3][2])
+# for r in recordsTeamsWithPlayers[3][2]:
+#     print(r)
+#     print((recordsTeamsWithPlayers[3][2]).index(r))
 
 
-p = Pool(50)
-recordsAttributes = p.map(findPlayerAttributes, recordsPlayersFromTeams[3][2])
-p.terminate()
-p.join()
+# print(recordsPlayersFromTeams[3][2])
 
-print(recordsAttributes[0])
-# teamIds, teamNames, teamHyperlinks = findTeamsFromLeague(hyperlinks[6])
+testingAttr = []
+
+for recordTeamWithPlayers in recordsTeamsWithPlayers:
+    p = Pool(50)
+    recordsAttributes = p.map(findPlayerAttributes, recordTeamWithPlayers[2])
+    p.terminate()
+    p.join()
+    for i in recordsAttributes:
+        print(i[3])

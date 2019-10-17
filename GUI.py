@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 import datetime
-from Scripts.League.PlayersFromLeague import generateListOfPlayersFromLeague
+from Scripts.League.PlayersFromLeague import *
 from Scripts.League.CreateLeagueSaisonHyperlink import *
 from Scripts.Match.EventsFromQueue import generateEventsFromQueue
 from Scripts.Other.CountriesFromTransfermarkt import getCountriesFromFile
@@ -95,7 +95,7 @@ while True:
             sg.PopupError('Change country first. In ' + countriesJSON[values['Country']]['name'] + " there is no " + values['LeaguePlayers'])                
             continue
         try:        
-            generateListOfPlayersFromLeague(countriesJSON[values['Country']]['name'], values['LeaguePlayers'], values['SeasonPlayers'].replace('/', '_'), leagueHyperlink)
+            generateListOfPlayersFromLeaguePool(countriesJSON[values['Country']]['name'], values['LeaguePlayers'], values['SeasonPlayers'].replace('/', '_'), leagueHyperlink)
         except:
             print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'])
             logging.error("Exception occurred", exc_info=True)    
