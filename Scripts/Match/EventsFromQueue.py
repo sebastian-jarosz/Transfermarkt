@@ -1,6 +1,5 @@
 from Scripts.Match.MatchesFromQueue import getMatchesFormQueue
 from Scripts.Match.EventsFromMatch import getEventsFromMatch
-import pandas as pd
 import time
 import pandas as pd
 from pathlib import Path
