@@ -51,7 +51,7 @@ def generateEventsFromQueue(countryName, leagueName, saison, queueNumber, queueH
     print("End of export for " + leagueName + " " + str(saison) + " " + str(queueNumber))
     sg.Popup("End of export")
 
-def generateEventsFromQueueLoop(countryName, leagueName, saison, queueNumber, queueHyperlink):
+def generateEventsFromQueuePool(countryName, leagueName, saison, queueNumber, queueHyperlink):
     sg.Popup("Start of export")
     print("Start of export for " + leagueName + " " + str(saison) + " " + str(queueNumber))
     if platform == "darwin":
