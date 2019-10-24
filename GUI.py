@@ -62,7 +62,7 @@ tab2_layout = [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonl
 tab3_layout = [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonly="True", key="LeagueMatches")],
                [sg.Text("Season"), sg.Combo(SEASONS, size=(100,100), readonly="True", key="SeasonMatches")],
                [sg.Text("Queue"), sg.Combo(QUEUES, size=(100,100), readonly="True", key="QueueMatches")],
-               [sg.ReadButton('Export matches')]]
+               [sg.ReadButton('Export matches'), sg.ReadButton('Export matches from 1 to choosen queue')]]
 
 layout = [[sg.Image(image, 
            pad=(100, 0))],
