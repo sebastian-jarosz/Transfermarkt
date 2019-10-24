@@ -29,6 +29,9 @@ def generateEventsFromQueue(countryName, leagueName, saison, queueNumber, queueH
     tempTable4 = []
     tempTable5 = []
 
+    if not matchesHyperlinks:
+        raise BaseException
+
     for i in range(0, len(matchesHyperlinks)):
         print(matchesHyperlinks[i])
         time.sleep(1)

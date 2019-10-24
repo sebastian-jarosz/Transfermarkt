@@ -114,5 +114,9 @@ while True:
         except Exception as e:
             print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'])
             logging.error("Exception occurred", exc_info=True)    
-            sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'] + ". Did You change countries?")    
+            sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'] + ". Did You change countries?")
+        except BaseException as e:
+            sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'] + ". No matches in that queue")              
 
+    elif event is  'Export matches from 1 to choosen queue':
+        print('elo')
