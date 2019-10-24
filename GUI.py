@@ -119,4 +119,11 @@ while True:
             sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'] + ". No matches in that queue")              
 
     elif event is  'Export matches from 1 to choosen queue':
-        print('elo')
+        leagueHyperlink = None
+        for league in countriesJSON[values['Country']]['leagues']:
+            if league['name'] == values['LeagueMatches']:
+                leagueHyperlink = league['hyperlink']
+        if leagueHyperlink is None:
+            sg.PopupError('Change country first. In ' + countriesJSON[values['Country']]['name'] + " there is no " + values['LeaguePlayers'])                
+            continue
+        
