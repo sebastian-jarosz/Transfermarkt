@@ -10,8 +10,18 @@ if platform == "darwin":
     import caffeine
 
 
+def checkIfQueueFileExist(countryName, leagueName, saison, queueNumber):
+    if platform == "darwin":
+        directory = os.environ['HOME'] + "/Desktop/Transfermarkt Export/" + countryName + "/" + str(saison) + "/" + leagueName + "/Matches"
+        path = directory + "/" + str(queueNumber) + ".xlsx"
+    if platform == "win32":
+        directory = os.environ['HOMEPATH'] + "\Desktop\Transfermarkt Export\\" + countryName + "\\" + str(saison) + "\\" + leagueName + "\Matches"
+        path = directory + "\\" + str(queueNumber) + ".xlsx"
+    print(path)
+    print(os.path.isfile(path))
+    return os.path.isfile(path)
+
 def generateEventsFromQueue(countryName, leagueName, saison, queueNumber, queueHyperlink):
-    sg.Popup("Start of export")
     print("Start of export for " + leagueName + " " + str(saison) + " " + str(queueNumber))
     if platform == "darwin":
         directory = os.environ['HOME'] + "/Desktop/Transfermarkt Export/" + countryName + "/" + str(saison) + "/" + leagueName + "/Matches"
@@ -50,7 +60,6 @@ def generateEventsFromQueue(countryName, leagueName, saison, queueNumber, queueH
     df3.to_excel(writer, "ASSISTS")
     writer.save()
     print("End of export for " + leagueName + " " + str(saison) + " " + str(queueNumber))
-    sg.Popup("End of export")
 
 def generateEventsFromQueuePool(countryName, leagueName, saison, queueNumber, queueHyperlink):
     sg.Popup("Start of export")

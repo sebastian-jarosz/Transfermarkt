@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import datetime
 from Scripts.League.PlayersFromLeague import *
 from Scripts.League.CreateLeagueSaisonHyperlink import *
-from Scripts.Match.EventsFromQueue import generateEventsFromQueue
+from Scripts.Match.EventsFromQueue import *
 from Scripts.Other.CountriesFromTransfermarkt import getCountriesFromFile
 import os
 import logging
@@ -38,14 +38,14 @@ LEAGUENAMES = []
 #Get 10 years from this year
 SEASONS = []
 year = datetime.datetime.today().year
-for i in range(0, 10):
-    tempSeason = str(year - i) + '/' + str(year - i +1)
+for quNumber in range(0, 10):
+    tempSeason = str(year - quNumber) + '/' + str(year - quNumber +1)
     SEASONS.append(tempSeason)
 
 #Queues    
 QUEUES = []
-for i in range(1, 38):
-    QUEUES.append(i)
+for quNumber in range(1, 38):
+    QUEUES.append(quNumber)
 	
 if platform == "darwin":
 		image = os.environ['HOME'] + "/Desktop/GitHub/Transfermarkt/GUI/Logo.png"
@@ -62,7 +62,7 @@ tab2_layout = [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonl
 tab3_layout = [[sg.Text("League"), sg.Combo(LEAGUENAMES, size=(100,100), readonly="True", key="LeagueMatches")],
                [sg.Text("Season"), sg.Combo(SEASONS, size=(100,100), readonly="True", key="SeasonMatches")],
                [sg.Text("Queue"), sg.Combo(QUEUES, size=(100,100), readonly="True", key="QueueMatches")],
-               [sg.ReadButton('Export matches'), sg.ReadButton('Export matches from 1 to choosen queue')]]
+               [ sg.ReadButton('Export matches from 1 to chosen queue'), sg.ReadButton('Export matches from chosen queue')]]
 
 layout = [[sg.Image(image, 
            pad=(100, 0))],
@@ -101,7 +101,7 @@ while True:
             logging.error("Exception occurred", exc_info=True)    
             sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'])   
 
-    elif event is 'Export matches':
+    elif event is 'Export matches from chosen queue':
         leagueHyperlink = None
         for league in countriesJSON[values['Country']]['leagues']:
             if league['name'] == values['LeagueMatches']:
@@ -112,13 +112,14 @@ while True:
         try:        
             generateEventsFromQueue(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), values['QueueMatches'], generateLeagueSaisonQueueHyperlink(leagueHyperlink, values['SeasonMatches'].split('/')[0], values['QueueMatches']))
         except Exception as e:
-            print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'])
+            print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + str(values['QueueMatches']))
             logging.error("Exception occurred", exc_info=True)    
-            sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'] + ". Did You change countries?")
+            sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + str(values['QueueMatches']) + ". Did You change countries?")
         except BaseException as e:
-            sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + values['QueueMatches'] + ". No matches in that queue")              
+            sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + str(values['QueueMatches']) + ". No matches in that queue")              
+        sg.Popup('End of export')     
 
-    elif event is  'Export matches from 1 to choosen queue':
+    elif event is  'Export matches from 1 to chosen queue':
         leagueHyperlink = None
         for league in countriesJSON[values['Country']]['leagues']:
             if league['name'] == values['LeagueMatches']:
@@ -126,4 +127,14 @@ while True:
         if leagueHyperlink is None:
             sg.PopupError('Change country first. In ' + countriesJSON[values['Country']]['name'] + " there is no " + values['LeaguePlayers'])                
             continue
-        
+        for quNumber in range(1,int(values['QueueMatches']) + 1):
+            if checkIfQueueFileExist(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), quNumber) is not True:
+                try:        
+                    generateEventsFromQueue(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), quNumber, generateLeagueSaisonQueueHyperlink(leagueHyperlink, values['SeasonMatches'].split('/')[0], quNumber))
+                except Exception as e:
+                    print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + str(quNumber))
+                    logging.error("Exception occurred", exc_info=True)    
+                    sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + str(quNumber) + ". Did You change countries?")
+                except BaseException as e:
+                    sg.PopupError('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + str(quNumber) + ". No matches in that queue")
+        sg.Popup('End of export')     

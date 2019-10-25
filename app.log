@@ -1,2 +1,12 @@
 DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
-DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /jumplist/spieltag/wettbewerb/PL1/plus/?saison_id=2019&spieltag=32 HTTP/1.1" 500 None
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /jumplist/spieltag/wettbewerb/PL1/plus/?saison_id=2019&spieltag=13 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /jumplist/spieltag/wettbewerb/PL1/plus/?saison_id=2019&spieltag=13 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /jumplist/spieltag/wettbewerb/PL1/plus/?saison_id=2019&spieltag=14 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /jumplist/spieltag/wettbewerb/PL1/plus/?saison_id=2019&spieltag=15 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /jumplist/spieltag/wettbewerb/PL1/plus/?saison_id=2019&spieltag=16 HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): www.transfermarkt.com:443
+DEBUG:urllib3.connectionpool:https://www.transfermarkt.com:443 "GET /jumplist/spieltag/wettbewerb/PL1/plus/?saison_id=2019&spieltag=13 HTTP/1.1" 200 None
