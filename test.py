@@ -14,12 +14,13 @@ from Scripts.Match.EventsFromMatch import *
 from Scripts.Match.EventsFromQueue import *
 
 
-print(checkIfQueueFileExist("Poland", "Ekstraklasa", "2019_2020", 1))
+# print(checkIfQueueFileExist("Poland", "Ekstraklasa", "2019_2020", 1))
 
-for i in range(1, 9):
-    print(i)
-    print(i)
+# for i in range(1, 9):
+#     print(i)
+#     print(i)
 
+getCountriesFromTransfermarkt()    
 # playersInMatchIds, playersInMatchTimes, goalsIds, assistsIds = getEventsFromMatchPool('https://www.transfermarkt.com/spielbericht/index/spielbericht/3210731', '2019_2020')
 # print(playersInMatchIds)
 # print(playersInMatchTimes)

@@ -25,7 +25,7 @@ def getLeaguesFromCountry(countryHyperlink):
         league['id'] = leagueTag['value']
         league['name'] = leagueTag.text
         league['hyperlink'] = 'https://www.transfermarkt.com/jumplist/startseite/wettbewerb/' + league['id']
-        if league['name'] not in ['ÖFB-Cup', 'Hrvatski nogometni kup', 'MOL Cup', 'Polish Cup', 'Superpuchar', 'Slovnaft Cup']:
+        if league['name'] not in ['ÖFB-Cup', 'Hrvatski nogometni kup', 'MOL Cup', 'Polish Cup', 'Superpuchar', 'Slovnaft Cup', 'Kup Srbije', 'Ukrainian Cup', 'Ukrainian Super Cup']:
             leagues.append(league)
 
     return leagues   

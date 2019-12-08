@@ -28,7 +28,7 @@ def getCountriesFromTransfermarkt():
     countriesList = pageSoup.find("select", {"data-placeholder" : "Country"}).find_all('option')
 
     #When want more countries need to be added here
-    neededCountries = ['Poland', 'Latvia', 'Lithuania', 'Serbia', 'Croatia', 'Czech Republic', 'Slovakia', 'Austria']
+    neededCountries = ['Poland', 'Latvia', 'Lithuania', 'Serbia', 'Croatia', 'Czech Republic', 'Slovakia', 'Austria', 'Ukraine']
 
     del countriesList[0] #delete empty record
 
