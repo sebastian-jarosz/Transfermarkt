@@ -110,7 +110,7 @@ while True:
             sg.PopupError('Change country first. In ' + countriesJSON[values['Country']]['name'] + " there is no " + values['LeaguePlayers'])                
             continue
         try:        
-            generateEventsFromQueue(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), values['QueueMatches'], generateLeagueSaisonQueueHyperlink(leagueHyperlink, values['SeasonMatches'].split('/')[0], values['QueueMatches']))
+            generateEventsFromQueue(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), values['QueueMatches'], generate_league_season_queue_hyperlink(leagueHyperlink, values['SeasonMatches'].split('/')[0], values['QueueMatches']))
         except Exception as e:
             print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + str(values['QueueMatches']))
             logging.error("Exception occurred", exc_info=True)    
@@ -130,7 +130,7 @@ while True:
         for quNumber in range(1,int(values['QueueMatches']) + 1):
             if checkIfQueueFileExist(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), quNumber) is not True:
                 try:        
-                    generateEventsFromQueue(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), quNumber, generateLeagueSaisonQueueHyperlink(leagueHyperlink, values['SeasonMatches'].split('/')[0], quNumber))
+                    generateEventsFromQueue(countriesJSON[values['Country']]['name'], values['LeagueMatches'], values['SeasonMatches'].replace('/', '_'), quNumber, generate_league_season_queue_hyperlink(leagueHyperlink, values['SeasonMatches'].split('/')[0], quNumber))
                 except Exception as e:
                     print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'] + " - Queue: " + str(quNumber))
                     logging.error("Exception occurred", exc_info=True)    
