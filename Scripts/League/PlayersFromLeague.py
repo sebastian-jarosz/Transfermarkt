@@ -5,7 +5,7 @@ from sys import platform
 import PySimpleGUI as sg
 import pandas as pd
 from Scripts.Player.AttributesFromPlayer import find_player_attributes
-from Scripts.Team.PlayersFromTeam import findPlayersFromTeam
+from Scripts.Team.PlayersFromTeam import find_players_from_team
 from Scripts.Team.TeamsFromLeague import findTeamsFromLeague
 
 if platform == "darwin":
@@ -36,7 +36,7 @@ def generate_list_of_players_from_league(country_name, league_name, season, leag
     if not os.path.exists(directory):
         os.makedirs(directory)
     for i in range(0, len(team_hyperlinks)):
-        temp_ids, temp_names, temp_hyperlinks = findPlayersFromTeam(team_hyperlinks[i])
+        temp_ids, temp_names, temp_hyperlinks = find_players_from_team(team_hyperlinks[i])
         sg.OneLineProgressMeter('Export', i, len(team_hyperlinks), 'key', 'Export of players from teams')
         temp_team_name = team_names[i]
         print("Start of import for " + team_names[i])
@@ -87,7 +87,7 @@ def generate_list_of_players_from_league_pool(country_name, league_name, season,
         os.makedirs(directory)
 
     p = Pool(50)
-    records_teams_with_players = p.map(findPlayersFromTeam, team_hyperlinks)
+    records_teams_with_players = p.map(find_players_from_team, team_hyperlinks)
     p.terminate()
     p.join()
 

@@ -8,7 +8,7 @@ from multiprocessing import Pool
 from Scripts.Other.CountriesFromTransfermarkt import *
 from Scripts.Other.LeaguesFromCountries import get_leagues_from_country
 from Scripts.Team.TeamsFromLeague import findTeamsFromLeague
-from Scripts.Team.PlayersFromTeam import findPlayersFromTeam
+from Scripts.Team.PlayersFromTeam import find_players_from_team
 from Scripts.Player.AttributesFromPlayer import find_player_attributes
 from Scripts.Match.EventsFromMatch import *
 from Scripts.Match.EventsFromQueue import *

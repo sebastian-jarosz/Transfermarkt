@@ -1,35 +1,35 @@
-import requests 
+import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
 
-def findPlayersFromTeam(teamHyperlink):
-    #For pretending being a browser
-    headers = {'User-Agent': 
-               'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
+def find_players_from_team(team_hyperlink):
+    # For pretending being a browser
+    headers = {'User-Agent':
+                   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
 
-    #verein/teamid/season_id/year
+    # verein/teamid/season_id/year
 
-    #Getting full page
-    pageTree = requests.get(teamHyperlink, headers=headers)
-    pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
+    # Getting full page
+    page_tree = requests.get(team_hyperlink, headers=headers)
+    page_soup = BeautifulSoup(page_tree.content, 'html.parser')
 
-    table = pageSoup.find("div", {"id":"yw1"})
+    table = page_soup.find("div", {"id": "yw1"})
 
-    fullNameTags = table.find_all("span", {"class" : "hide-for-small"})
+    full_name_tags = table.find_all("span", {"class": "hide-for-small"})
 
-    playerTags = []
+    player_tags = []
 
-    for fullNameTag in fullNameTags:
-        playerTags.extend(fullNameTag.find_all("a", {"class":"spielprofil_tooltip"}))
+    for fullNameTag in full_name_tags:
+        player_tags.extend(fullNameTag.find_all("a", {"class": "spielprofil_tooltip"}))
 
-    playerIds = []
-    playerNames = []
-    playerHyperlinks = []
+    player_ids = []
+    player_names = []
+    player_hyperlinks = []
 
-    for playerTag in playerTags:
-        playerIds.append((playerTag['href'].rsplit('/',1))[-1])
-        playerNames.append(playerTag.text)
-        playerHyperlinks.append("https://www.transfermarkt.com" + playerTag['href'])
+    for playerTag in player_tags:
+        player_ids.append((playerTag['href'].rsplit('/', 1))[-1])
+        player_names.append(playerTag.text)
+        player_hyperlinks.append("https://www.transfermarkt.com" + playerTag['href'])
 
-    return playerIds, playerNames, playerHyperlinks
+    return player_ids, player_names, player_hyperlinks
