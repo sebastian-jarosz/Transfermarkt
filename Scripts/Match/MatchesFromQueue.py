@@ -1,24 +1,23 @@
-import requests 
+import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 
 
-def getMatchesFormQueue(queueHyperlink):
-    #For pretending being a browser
-    headers = {'User-Agent': 
-                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
+def get_matches_form_queue(queue_hyperlink):
+    # For pretending being a browser
+    headers = {'User-Agent':
+                   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
 
-    page = queueHyperlink
+    page = queue_hyperlink
 
-    #Getting full page
-    pageTree = requests.get(page, headers=headers)
-    pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
+    # Getting full page
+    page_tree = requests.get(page, headers=headers)
+    page_soup = BeautifulSoup(page_tree.content, 'html.parser')
 
-    allMatchesTags = pageSoup.findAll("a", {"title" : "Match Sheet"})
+    all_matches_tags = page_soup.findAll("a", {"title": "Match Sheet"})
 
-    matchHyperlinks = []
+    match_hyperlinks = []
 
-    for matchTag in allMatchesTags:
-        matchHyperlinks.append("https://www.transfermarkt.com" + matchTag['href'])
+    for matchTag in all_matches_tags:
+        match_hyperlinks.append("https://www.transfermarkt.com" + matchTag['href'])
 
-    return matchHyperlinks
+    return match_hyperlinks

@@ -4,7 +4,7 @@ from sys import platform
 import PySimpleGUI as sg
 import pandas as pd
 from Scripts.Match.EventsFromMatch import get_events_from_match_pool, get_events_from_match
-from Scripts.Match.MatchesFromQueue import getMatchesFormQueue
+from Scripts.Match.MatchesFromQueue import get_matches_form_queue
 
 if platform == "darwin":
     pass
@@ -34,7 +34,7 @@ def generate_events_from_queue(country_name, league_name, season, queue_number, 
         directory = os.environ['HOMEPATH'] + "\Desktop\Transfermarkt Export\\" + country_name + "\\" + str(
             season) + "\\" + league_name + "\Matches"
         path = directory + "\\" + str(queue_number) + ".xlsx"
-    matches_hyperlinks = getMatchesFormQueue(queue_hyperlink)
+    matches_hyperlinks = get_matches_form_queue(queue_hyperlink)
     if not os.path.exists(directory):
         os.makedirs(directory)
     writer = pd.ExcelWriter(path, engine='xlsxwriter')
@@ -78,7 +78,7 @@ def generate_events_from_queue_pool(country_name, league_name, season, queue_num
         directory = os.environ['HOMEPATH'] + "\Desktop\Transfermarkt Export\\" + country_name + "\\" + str(
             season) + "\\" + league_name + "\Matches"
         path = directory + "\\" + str(queue_number) + ".xlsx"
-    matchesHyperlinks = getMatchesFormQueue(queue_hyperlink)
+    matchesHyperlinks = get_matches_form_queue(queue_hyperlink)
     if not os.path.exists(directory):
         os.makedirs(directory)
     writer = pd.ExcelWriter(path, engine='xlsxwriter')
