@@ -1,5 +1,5 @@
 from Scripts.Match.MatchesFromQueue import getMatchesFormQueue
-from Scripts.Match.EventsFromMatch import getEventsFromMatchPool
+from Scripts.Match.EventsFromMatch import get_events_from_match_pool
 import time
 import pandas as pd
 from pathlib import Path
@@ -45,7 +45,7 @@ def generateEventsFromQueue(countryName, leagueName, saison, queueNumber, queueH
     for i in range(0, len(matchesHyperlinks)):
         print(matchesHyperlinks[i])
         time.sleep(1)
-        tempPlayersInMatchIds, tempPlayersInMatchTimes, tempGoalsIds, tempAssistsIds = getEventsFromMatchPool(matchesHyperlinks[i], saison)
+        tempPlayersInMatchIds, tempPlayersInMatchTimes, tempGoalsIds, tempAssistsIds = get_events_from_match_pool(matchesHyperlinks[i], saison)
         tempTable1.extend(tempPlayersInMatchIds)
         tempTable2.extend(tempPlayersInMatchTimes) 
         tempTable3.append(tempGoalsIds) 
