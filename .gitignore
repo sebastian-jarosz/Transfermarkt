@@ -4,7 +4,6 @@
 /workspace.xml
 /venv/
 *.log
-app.log
 .idea/
 __pycache__
 
