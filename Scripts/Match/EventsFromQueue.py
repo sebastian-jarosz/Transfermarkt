@@ -78,7 +78,7 @@ def generate_events_from_queue_pool(country_name, league_name, season, queue_num
         directory = os.environ['HOMEPATH'] + "\Desktop\Transfermarkt Export\\" + country_name + "\\" + str(
             season) + "\\" + league_name + "\Matches"
         path = directory + "\\" + str(queue_number) + ".xlsx"
-    matchesHyperlinks = get_matches_form_queue(queue_hyperlink)
+    matches_hyperlinks = get_matches_form_queue(queue_hyperlink)
     if not os.path.exists(directory):
         os.makedirs(directory)
     writer = pd.ExcelWriter(path, engine='xlsxwriter')
@@ -87,18 +87,18 @@ def generate_events_from_queue_pool(country_name, league_name, season, queue_num
     temp_table3 = []
     temp_table4 = []
 
-    for i in range(0, len(matchesHyperlinks)):
-        sg.OneLineProgressMeter('Export', i, len(matchesHyperlinks), 'key', 'Export of events from queue')
-        print(matchesHyperlinks[i])
+    for i in range(0, len(matches_hyperlinks)):
+        sg.OneLineProgressMeter('Export', i, len(matches_hyperlinks), 'key', 'Export of events from queue')
+        print(matches_hyperlinks[i])
         time.sleep(1)
         temp_players_in_match_ids, temp_players_in_match_times, temp_goals_ids, temp_assists_ids = get_events_from_match(
-            matchesHyperlinks[i], season)
+            matches_hyperlinks[i], season)
         temp_table1.extend(temp_players_in_match_ids)
         temp_table2.extend(temp_players_in_match_times)
         temp_table3.append(temp_goals_ids)
         temp_table4.append(temp_assists_ids)
 
-    sg.OneLineProgressMeter('Export', len(matchesHyperlinks), len(matchesHyperlinks), 'key',
+    sg.OneLineProgressMeter('Export', len(matches_hyperlinks), len(matches_hyperlinks), 'key',
                             'Export of events from queue')
     df1 = pd.DataFrame(temp_table1)
     df1['TIMES'] = temp_table2
