@@ -3,7 +3,7 @@ import datetime
 from Scripts.League.PlayersFromLeague import *
 from Scripts.League.CreateLeagueSaisonHyperlink import *
 from Scripts.Match.EventsFromQueue import *
-from Scripts.Other.CountriesFromTransfermarkt import getCountriesFromFile
+from Scripts.Other.CountriesFromTransfermarkt import get_countries_from_file
 import os
 import logging
 import sys
@@ -29,7 +29,7 @@ root.addHandler(handler)
 
 #Leagues
 COUNTRIES = []
-countriesJSON = getCountriesFromFile()
+countriesJSON = get_countries_from_file()
 for country in countriesJSON.keys():
     COUNTRIES.append(country)
 

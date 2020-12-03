@@ -1,55 +1,53 @@
-import os
-import requests 
-from bs4 import BeautifulSoup
-import pandas as pd
 import codecs
 import json
-from Scripts.Other.LeaguesFromCountries import getLeaguesFromCountry
+import os
 from sys import platform
+from bs4 import BeautifulSoup
+from Scripts.Other.LeaguesFromCountries import getLeaguesFromCountry
 
 
-def getCountriesFromTransfermarkt():
-
-    #1580 line
-    htmlpath = os.path.realpath(__file__)
+def get_countries_from_transfermarkt():
+    # 1580 line
+    html_path = os.path.realpath(__file__)
     if platform == "darwin":
-        htmlpath = htmlpath.rsplit('/', 1)[0] + "/transfermarkt.html"
+        html_path = html_path.rsplit('/', 1)[0] + "/transfermarkt.html"
     if platform == "win32":
-        htmlpath = htmlpath.rsplit('\\', 1)[0] + "/transfermarkt.html"
+        html_path = html_path.rsplit('\\', 1)[0] + "/transfermarkt.html"
 
-    f=codecs.open(htmlpath, 'r', encoding='utf-8', errors=' ignore')
+    f = codecs.open(html_path, 'r', encoding='utf-8', errors=' ignore')
 
     countries = {}
 
-    #Getting full page
+    # Getting full page
     # pageTree = requests.get(f.read(), headers=headers)
-    pageSoup = BeautifulSoup(f, 'html.parser')
+    page_soup = BeautifulSoup(f, 'html.parser')
 
-    countriesList = pageSoup.find("select", {"data-placeholder" : "Country"}).find_all('option')
+    countries_list = page_soup.find("select", {"data-placeholder": "Country"}).find_all('option')
 
-    #When want more countries need to be added here
-    neededCountries = ['Poland', 'Latvia', 'Lithuania', 'Serbia', 'Croatia', 'Czech Republic', 'Slovakia', 'Austria', 'Ukraine']
+    # When want more countries need to be added here
+    needed_countries = ['Poland', 'Latvia', 'Lithuania', 'Serbia', 'Croatia', 'Czech Republic', 'Slovakia', 'Austria',
+                        'Ukraine']
 
-    del countriesList[0] #delete empty record
+    del countries_list[0]  # delete empty record
 
-    for country in countriesList:
-        tempCountry = {}
-        tempCountry['id'] = country['value']
-        tempCountry['name'] = country.text
-        if tempCountry['name'] in neededCountries:
-            tempCountry['hyperlink'] = 'https://www.transfermarkt.com/wettbewerbe/national/wettbewerbe/' + country['value']
-            tempCountry['leagues'] = getLeaguesFromCountry(tempCountry['hyperlink'])
-            countries[country.text] = tempCountry  
+    for country in countries_list:
+        temp_country = {'id': country['value'], 'name': country.text}
+        if temp_country['name'] in needed_countries:
+            temp_country['hyperlink'] = 'https://www.transfermarkt.com/wettbewerbe/national/wettbewerbe/' + country[
+                'value']
+            temp_country['leagues'] = getLeaguesFromCountry(temp_country['hyperlink'])
+            countries[country.text] = temp_country
 
-    with open(htmlpath.rsplit('/', 1)[0] + '/data.txt', 'w') as outfile:
+    with open(html_path.rsplit('/', 1)[0] + '/data.txt', 'w') as outfile:
         json.dump(countries, outfile)
 
-def getCountriesFromFile():
+
+def get_countries_from_file():
     htmlpath = os.path.realpath(__file__)
 
-    if platform == "darwin": 
-        f=codecs.open(htmlpath.rsplit('/', 1)[0] + '/data.txt', 'r', encoding='utf-8', errors=' ignore')
+    if platform == "darwin":
+        f = codecs.open(htmlpath.rsplit('/', 1)[0] + '/data.txt', 'r', encoding='utf-8', errors=' ignore')
     if platform == "win32":
-        f=codecs.open(htmlpath.rsplit('\\', 1)[0] + '\data.txt', 'r', encoding='utf-8', errors=' ignore')
-    countries = json.load(f)  
+        f = codecs.open(htmlpath.rsplit('\\', 1)[0] + '\data.txt', 'r', encoding='utf-8', errors=' ignore')
+    countries = json.load(f)
     return countries

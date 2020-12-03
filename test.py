@@ -20,7 +20,7 @@ from Scripts.Match.EventsFromQueue import *
 #     print(i)
 #     print(i)
 
-getCountriesFromTransfermarkt()    
+get_countries_from_transfermarkt()
 # playersInMatchIds, playersInMatchTimes, goalsIds, assistsIds = getEventsFromMatchPool('https://www.transfermarkt.com/spielbericht/index/spielbericht/3210731', '2019_2020')
 # print(playersInMatchIds)
 # print(playersInMatchTimes)
