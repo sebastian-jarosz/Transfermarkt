@@ -4,7 +4,7 @@ from multiprocessing import Pool
 from sys import platform
 import PySimpleGUI as sg
 import pandas as pd
-from Scripts.Player.AttributesFromPlayer import findPlayerAttributes
+from Scripts.Player.AttributesFromPlayer import find_player_attributes
 from Scripts.Team.PlayersFromTeam import findPlayersFromTeam
 from Scripts.Team.TeamsFromLeague import findTeamsFromLeague
 
@@ -43,7 +43,7 @@ def generate_list_of_players_from_league(country_name, league_name, season, leag
         for j in range(0, (len(temp_ids))):
             player_teams.append(temp_team_name)
             time.sleep(1.5)
-            temp_date_of_birth, temp_position, temp_agent, temp_foot = findPlayerAttributes(temp_hyperlinks[j])
+            temp_date_of_birth, temp_position, temp_agent, temp_foot = find_player_attributes(temp_hyperlinks[j])
             player_dates_of_birth.append(temp_date_of_birth)
             player_positions.append(temp_position)
             player_feet.append(temp_foot)
@@ -96,7 +96,7 @@ def generate_list_of_players_from_league_pool(country_name, league_name, season,
             recordTeamWithPlayers)]  # getting index of record in all records pooled before
         print("Start of import for " + temp_team_name)
         p = Pool(50)
-        records_players_with_attributes = p.map(findPlayerAttributes, recordTeamWithPlayers[2])
+        records_players_with_attributes = p.map(find_player_attributes, recordTeamWithPlayers[2])
         p.terminate()
         p.join()
         for record_player_with_attributes in records_players_with_attributes:
