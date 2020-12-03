@@ -95,7 +95,7 @@ while True:
             sg.PopupError('Change country first. In ' + countriesJSON[values['Country']]['name'] + " there is no " + values['LeaguePlayers'])                
             continue
         try:        
-            generateListOfPlayersFromLeaguePool(countriesJSON[values['Country']]['name'], values['LeaguePlayers'], values['SeasonPlayers'].replace('/', '_'), leagueHyperlink)
+            generate_list_of_players_from_league_pool(countriesJSON[values['Country']]['name'], values['LeaguePlayers'], values['SeasonPlayers'].replace('/', '_'), leagueHyperlink)
         except:
             print('There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values['LeaguePlayers'])
             logging.error("Exception occurred", exc_info=True)    
