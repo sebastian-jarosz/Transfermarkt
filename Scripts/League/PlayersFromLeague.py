@@ -6,7 +6,7 @@ import PySimpleGUI as sg
 import pandas as pd
 from Scripts.Player.AttributesFromPlayer import find_player_attributes
 from Scripts.Team.PlayersFromTeam import find_players_from_team
-from Scripts.Team.TeamsFromLeague import findTeamsFromLeague
+from Scripts.Team.TeamsFromLeague import find_teams_from_league
 
 if platform == "darwin":
     pass
@@ -14,7 +14,7 @@ if platform == "darwin":
 
 def generate_list_of_players_from_league(country_name, league_name, season, league_hyperlink):
     sg.Popup("Start of export")
-    team_ids, team_names, team_hyperlinks = findTeamsFromLeague(league_hyperlink)
+    team_ids, team_names, team_hyperlinks = find_teams_from_league(league_hyperlink)
 
     player_ids = []
     player_names = []
@@ -64,7 +64,7 @@ def generate_list_of_players_from_league(country_name, league_name, season, leag
 
 def generate_list_of_players_from_league_pool(country_name, league_name, season, league_hyperlink):
     sg.Popup("Start of export")
-    team_ids, team_names, team_hyperlinks = findTeamsFromLeague(league_hyperlink)
+    team_ids, team_names, team_hyperlinks = find_teams_from_league(league_hyperlink)
 
     player_ids = []
     player_names = []
