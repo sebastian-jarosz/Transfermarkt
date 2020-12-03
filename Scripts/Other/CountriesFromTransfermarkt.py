@@ -3,7 +3,7 @@ import json
 import os
 from sys import platform
 from bs4 import BeautifulSoup
-from Scripts.Other.LeaguesFromCountries import getLeaguesFromCountry
+from Scripts.Other.LeaguesFromCountries import get_leagues_from_country
 
 
 def get_countries_from_transfermarkt():
@@ -35,7 +35,7 @@ def get_countries_from_transfermarkt():
         if temp_country['name'] in needed_countries:
             temp_country['hyperlink'] = 'https://www.transfermarkt.com/wettbewerbe/national/wettbewerbe/' + country[
                 'value']
-            temp_country['leagues'] = getLeaguesFromCountry(temp_country['hyperlink'])
+            temp_country['leagues'] = get_leagues_from_country(temp_country['hyperlink'])
             countries[country.text] = temp_country
 
     with open(html_path.rsplit('/', 1)[0] + '/data.txt', 'w') as outfile:

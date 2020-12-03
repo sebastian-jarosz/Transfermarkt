@@ -6,7 +6,7 @@ import codecs
 import json
 from multiprocessing import Pool
 from Scripts.Other.CountriesFromTransfermarkt import *
-from Scripts.Other.LeaguesFromCountries import getLeaguesFromCountry
+from Scripts.Other.LeaguesFromCountries import get_leagues_from_country
 from Scripts.Team.TeamsFromLeague import findTeamsFromLeague
 from Scripts.Team.PlayersFromTeam import findPlayersFromTeam
 from Scripts.Player.AttributesFromPlayer import findPlayerAttributes
