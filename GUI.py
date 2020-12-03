@@ -78,14 +78,14 @@ while True:
     if event is None or event == 'Exit':
         break
 
-    elif event is 'Change country':
+    elif event == 'Change country':
         LEAGUENAMES = []
         for league in countriesJSON[values['Country']]['leagues']:
             LEAGUENAMES.append(league['name'])
         window.FindElement('LeaguePlayers').Update(values=LEAGUENAMES)
         window.FindElement('LeagueMatches').Update(values=LEAGUENAMES)
 
-    elif event is 'Export players':
+    elif event == 'Export players':
         leagueHyperlink = None
         for league in countriesJSON[values['Country']]['leagues']:
             if league['name'] == values['LeaguePlayers']:
@@ -106,7 +106,7 @@ while True:
                 'There is a problem with export of ' + countriesJSON[values['Country']]['name'] + " - " + values[
                     'LeaguePlayers'])
 
-    elif event is 'Export matches from chosen queue':
+    elif event == 'Export matches from chosen queue':
         leagueHyperlink = None
         for league in countriesJSON[values['Country']]['leagues']:
             if league['name'] == values['LeagueMatches']:
@@ -135,7 +135,7 @@ while True:
                     'LeaguePlayers'] + " - Queue: " + str(values['QueueMatches']) + ". No matches in that queue")
         sg.Popup('End of export')
 
-    elif event is 'Export matches from 1 to chosen queue':
+    elif event == 'Export matches from 1 to chosen queue':
         leagueHyperlink = None
         for league in countriesJSON[values['Country']]['leagues']:
             if league['name'] == values['LeagueMatches']:
