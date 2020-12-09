@@ -5,6 +5,8 @@ import pandas as pd
 import codecs
 import json
 from multiprocessing import Pool
+
+from Scripts.League.PlayersFromLeague import generate_list_of_players_from_league_pool
 from Scripts.Other.CountriesFromTransfermarkt import *
 from Scripts.Other.LeaguesFromCountries import get_leagues_from_country
 from Scripts.Team.TeamsFromLeague import find_teams_from_league
@@ -20,7 +22,7 @@ from Scripts.Match.EventsFromQueue import *
 #     print(i)
 #     print(i)
 
-get_countries_from_transfermarkt()
+# get_countries_from_transfermarkt()
 # playersInMatchIds, playersInMatchTimes, goalsIds, assistsIds = getEventsFromMatchPool('https://www.transfermarkt.com/spielbericht/index/spielbericht/3210731', '2019_2020')
 # print(playersInMatchIds)
 # print(playersInMatchTimes)
@@ -56,3 +58,5 @@ get_countries_from_transfermarkt()
 #     matchHyperlinks.append("https://www.transfermarkt.com" + matchTag['href'])
 
 # print(matchHyperlinks)
+
+generate_list_of_players_from_league_pool("Poland", "Ekstraklasa", "2020_2021", "https://www.transfermarkt.com/jumplist/startseite/wettbewerb/PL1")

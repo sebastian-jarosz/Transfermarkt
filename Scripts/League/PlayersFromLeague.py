@@ -1,6 +1,7 @@
 import os
 import time
 from multiprocessing import Pool
+import multiprocessing
 from sys import platform
 import PySimpleGUI as sg
 import pandas as pd
@@ -86,19 +87,20 @@ def generate_list_of_players_from_league_pool(country_name, league_name, season,
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    p = Pool(50)
+    multiprocessing.set_start_method("fork")
+    p = multiprocessing.Pool(50)
     records_teams_with_players = p.map(find_players_from_team, team_hyperlinks)
-    p.terminate()
-    p.join()
+    p.close()
 
     for recordTeamWithPlayers in records_teams_with_players:
         temp_team_name = team_names[records_teams_with_players.index(
             recordTeamWithPlayers)]  # getting index of record in all records pooled before
         print("Start of import for " + temp_team_name)
-        p = Pool(50)
+
+        p = multiprocessing.Pool(50)
         records_players_with_attributes = p.map(find_player_attributes, recordTeamWithPlayers[2])
-        p.terminate()
-        p.join()
+        p.close()
+
         for record_player_with_attributes in records_players_with_attributes:
             player_teams.append(temp_team_name)
             player_dates_of_birth.append(record_player_with_attributes[0])
