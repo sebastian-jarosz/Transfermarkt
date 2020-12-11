@@ -1,5 +1,5 @@
 import time
-from multiprocessing import Pool
+import multiprocessing
 import requests
 from bs4 import BeautifulSoup
 
@@ -135,10 +135,11 @@ def get_events_from_match_pool(match_hyperlink, season):
             season.split('_')[0] + "&verein=&liga=&wettbewerb=&pos=&trainer_id=" + match_id)
         starting_line_up_ids.append(id_tag['id'])
 
-    p = Pool(50)
+    multiprocessing.set_start_method("fork")
+    p = multiprocessing.Pool(50)
     starting_minutes = p.map(get_minutes_from_player, players_starting_hyperlinks)
-    p.terminate()
-    p.join()
+    p.close()
+
     starting_line_ups_times.append(starting_minutes)
 
     for i in range(0, len(goal_players_tags)):
@@ -164,10 +165,10 @@ def get_events_from_match_pool(match_hyperlink, season):
                 0] + "&verein=&liga=&wettbewerb=&pos=&trainer_id=" + match_id)
         in_ids.append((in_player_tags[i])['id'])
 
-    p = Pool(50)
+    p = multiprocessing.Pool(50)
     in_minutes = p.map(get_minutes_from_player, players_in_hyperlinks)
-    p.terminate()
-    p.join()
+    p.close()
+
     in_times.append(in_minutes)
 
     players_in_match_ids.extend(starting_line_up_ids)
