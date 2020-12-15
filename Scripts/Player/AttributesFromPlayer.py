@@ -1,38 +1,39 @@
-import requests 
+import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 
-import os
 
-def findPlayerAttributes(playerHyperlink):
-    #For pretending being a browser
-    headers = {'User-Agent': 
-                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
-    
-    page = playerHyperlink
+def find_player_attributes(player_hyperlink):
+    # For pretending being a browser
+    headers = {'User-Agent':
+                   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
 
-    print(playerHyperlink)
-    
-    #Getting full page
-    pageTree = requests.get(page, headers=headers)
-    pageSoup = BeautifulSoup(pageTree.content, 'html.parser')
-    
-    #Get birthdate and trim left and right white signs
+    page = player_hyperlink
+
+    print(player_hyperlink)
+
+    # Getting full page
+    page_tree = requests.get(page, headers=headers)
+    page_soup = BeautifulSoup(page_tree.content, 'html.parser')
+
+    # Get birthdate and trim left and right white signs
     try:
-        dateOfBirth = pageSoup.find("span", {"itemprop" : "birthDate"}).text.strip().split('(')[0].strip()
+        date_of_birth = page_soup.find("span", {"itemprop": "birthDate"}).text.strip().split('(')[0].strip()
     except:
-        dateOfBirth = "None"
-    #Get span with text "Position:" then get next span with actual position of player, then stip spaces
-    position = pageSoup.find("span", text="Position:").findNext("span").text.strip()
-    #Get span with text "Agent:" then get next span with actual agent of player, then stip spaces (try in case there is an agent)
+        date_of_birth = "None"
+    # Get span with text "Position:" then get next span with actual position of player, then stip spaces
+    position = page_soup.find("span", text="Position:").findNext("span").text.strip()
+    # Get span with text "Agent:" then get next span with actual agent of player,
+    # then stip spaces (try in case there is an agent)
     try:
-        agent = pageSoup.find("span", text="Agent:").findNext("a")["title"]
-        if(agent.startswith("<span")):
-            agent = agent.split("\"")[3]
+        agent = page_soup.find("span", text="Agent:").findNext("span").text.strip()
+        if agent.endswith("..."):
+            agent = page_soup.find("span", text="Agent:").findNext("a")["title"]
+            if agent.startswith("<span"):
+                agent = agent.split("\"")[3]
     except:
         agent = "None"
     try:
-        foot = pageSoup.find("th", text="Foot:").findNext("td").getText()
+        foot = page_soup.find("th", text="Foot:").findNext("td").getText()
     except:
-        foot = "No information"    
-    return dateOfBirth, position, agent, foot
+        foot = "No information"
+    return date_of_birth, position, agent, foot
