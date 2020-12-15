@@ -87,7 +87,7 @@ def generate_list_of_players_from_league_pool(country_name, league_name, season,
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    multiprocessing.set_start_method("fork")
+    multiprocessing.set_start_method("fork", force=True)
     p = multiprocessing.Pool(50)
     records_teams_with_players = p.map(find_players_from_team, team_hyperlinks)
     p.close()

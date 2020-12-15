@@ -135,7 +135,7 @@ def get_events_from_match_pool(match_hyperlink, season):
             season.split('_')[0] + "&verein=&liga=&wettbewerb=&pos=&trainer_id=" + match_id)
         starting_line_up_ids.append(id_tag['id'])
 
-    multiprocessing.set_start_method("fork")
+    multiprocessing.set_start_method("fork", force=True)
     p = multiprocessing.Pool(50)
     starting_minutes = p.map(get_minutes_from_player, players_starting_hyperlinks)
     p.close()
