@@ -1,16 +1,12 @@
 import os
 import time
-from multiprocessing import Pool
 import multiprocessing
-from sys import platform
 import PySimpleGUI as sg
 import pandas as pd
+from sys import platform
 from Scripts.Player.AttributesFromPlayer import find_player_attributes
 from Scripts.Team.PlayersFromTeam import find_players_from_team
 from Scripts.Team.TeamsFromLeague import find_teams_from_league
-
-if platform == "darwin":
-    pass
 
 
 def generate_list_of_players_from_league(country_name, league_name, season, league_hyperlink):
@@ -107,6 +103,7 @@ def generate_list_of_players_from_league_pool(country_name, league_name, season,
             player_positions.append(record_player_with_attributes[1])
             player_foots.append(record_player_with_attributes[3])
             player_agents.append(record_player_with_attributes[2])
+
         player_ids.extend(recordTeamWithPlayers[0])
         player_names.extend(recordTeamWithPlayers[1])
         player_hyperlinks.extend(recordTeamWithPlayers[2])
