@@ -1,6 +1,7 @@
-import platform
 import os
 import Scripts.Other.transfermarkt_app_constants as const
+
+from sys import platform
 
 
 def get_platform_attributes():
