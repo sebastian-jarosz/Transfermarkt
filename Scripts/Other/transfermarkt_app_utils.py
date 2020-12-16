@@ -16,30 +16,32 @@ def get_platform_attributes():
 
 
 def get_main_export_dir_path():
-    used_platform = get_platform_attributes()
-    dir_names = [os.environ[used_platform[const.KEY_HOME_DIR]]]
+    platform_attributes = get_platform_attributes()
+    dir_names = [os.environ[platform_attributes[const.KEY_HOME_DIR]]]
 
     for directory in const.EXPORT_PATH_DIRS:
         dir_names.append(directory)
 
-    main_export_path = used_platform[const.KEY_DELIMITER].join(dir_names)
+    main_dir_path = platform_attributes[const.KEY_DELIMITER].join(dir_names)
 
-    return main_export_path
+    return main_dir_path
 
 
 def get_season_dir_export_path(country_name, league_name, season):
-    used_platform = get_platform_attributes()
+    platform_attributes = get_platform_attributes()
     main_export_dir_path = get_main_export_dir_path()
 
     dir_array = [main_export_dir_path, country_name, league_name, str(season)]
-    season_dir_path = used_platform[const.KEY_DELIMITER].join(dir_array)
+    season_dir_path = platform_attributes[const.KEY_DELIMITER].join(dir_array)
 
     return season_dir_path
 
 
 def get_season_players_file_path(country_name, league_name, season):
+    platform_attributes = get_platform_attributes()
     season_players_file_path = get_season_dir_export_path(country_name, league_name, season)
-    return season_players_file_path + const.PLAYERS_FILE_NAME
+
+    return season_players_file_path + platform_attributes[const.KEY_DELIMITER] + const.PLAYERS_FILE_NAME
 
 
 def create_season_directory(country_name, league_name, season):
