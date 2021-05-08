@@ -18,7 +18,7 @@ def get_leagues_from_country(country_hyperlink):
 
     # tabs included in Domestic Leagues and Cups div
     not_used_tags = ["compact", "detailed"]
-    hyperlink_beginning = "https://www.transfermarkt.com/jumplist/startseite/wettbewerb/"
+    hyperlink_beginning = "https://www.transfermarkt.com/jumplist/spieltag/wettbewerb/"
 
     leagues = []
     for tag in a_tags:
