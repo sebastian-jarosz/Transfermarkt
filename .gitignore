@@ -7,4 +7,5 @@
 .idea/
 __pycache__
 test*.py
-
+test.py
+/Transfermarkt Export/
